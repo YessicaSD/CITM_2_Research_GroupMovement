@@ -56,7 +56,7 @@ public:
 		return keyboard[id];
 	}
 
-	j1KeyState GetMouseButtonDown(int id) const
+	j1KeyState GetMouseButtonState(int id) const
 	{
 		return mouse_buttons[id - 1];
 	}

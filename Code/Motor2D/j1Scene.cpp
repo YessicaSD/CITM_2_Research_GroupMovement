@@ -59,7 +59,7 @@ bool j1Scene::PreUpdate()
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
 
-	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if(App->input->GetMouseButtonState(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if(origin_selected == true)
 		{

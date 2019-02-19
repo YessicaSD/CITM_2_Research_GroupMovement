@@ -5,6 +5,8 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 
+#include <list>
+
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 
@@ -13,6 +15,7 @@
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
+
 
 class j1PathFinding : public j1Module
 {
@@ -23,6 +26,7 @@ public:
 	// Destructor
 	~j1PathFinding();
 
+	bool PostUpdate() override;
 	// Called before quitting
 	bool CleanUp();
 
@@ -88,14 +92,16 @@ struct PathNode
 struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
-	p2List_item<PathNode>* Find(const iPoint& point) const;
+	
+	std::list<PathNode>::iterator Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	p2List_item<PathNode>* GetNodeLowestScore() const;
+	std::list<PathNode>* GetNodeLowestScore() const;
 
 	// -----------
 	// The list itself, note they are not pointers!
-	p2List<PathNode> list;
+	std::list<PathNode> list;
+	
 };
 
 

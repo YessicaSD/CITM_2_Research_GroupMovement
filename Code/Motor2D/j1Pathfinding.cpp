@@ -2,6 +2,9 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "j1Input.h"
+#include "j1Render.h"
+#include "j1Map.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH),width(0), height(0)
 {
@@ -12,6 +15,45 @@ j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_L
 j1PathFinding::~j1PathFinding()
 {
 	RELEASE_ARRAY(map);
+}
+
+bool j1PathFinding::PostUpdate()
+{
+	// https://www.youtube.com/watch?v=f7mtWD9GdJ4 
+	//Explanation to Local Statics
+
+	static iPoint origin;
+	static bool origin_selected = false;
+	static bool createdDebugPath = false;
+
+	iPoint mousePos;
+	App->input->GetMousePosition(mousePos.x, mousePos.y);
+	iPoint p = App->render->ScreenToWorld(mousePos.x, mousePos.y);
+	p = App->map->WorldToMap(p.x, p.y);
+
+	if (App->input->GetMouseButtonState(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (origin_selected == true)
+		{
+
+			origin_selected = false;
+
+			if (CreatePath(origin, p) != -1)
+			{
+				createdDebugPath = true;
+			}
+
+		}
+		else
+		{
+			origin = p;
+			origin_selected = true;
+			createdDebugPath = false;
+			debugPath.Clear();
+
+		}
+	}
+	return true;
 }
 
 // Called before quitting
@@ -67,22 +109,26 @@ const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------
-p2List_item<PathNode>* PathList::Find(const iPoint& point) const
+std::list<PathNode>::iterator PathList::Find(const iPoint& point) 
 {
-	p2List_item<PathNode>* item = list.start;
-	while(item)
+	std::list<PathNode>::iterator item = list.begin();
+	uint listSize = list.size;
+
+	for (uint i = 0;  i < listSize; ++i)
 	{
-		if(item->data.pos == point)
+		if (item->pos == point)
 			return item;
-		item = item->next;
+
+		++item;
 	}
-	return NULL;
+	
+	return item;
 }
 
 // PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
 // ---------------------------------------------------------------------------------
-p2List_item<PathNode>* PathList::GetNodeLowestScore() const
+std::list<PathNode>* PathList::GetNodeLowestScore() const
 {
 	p2List_item<PathNode>* ret = NULL;
 	int min = 65535;
@@ -168,6 +214,10 @@ int PathNode::CalculateF(const iPoint& destination)
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	int ret = -1;
+
+	if (!IsWalkable(origin) || !IsWalkable(destination))
+		return ret;
+
 
 	// Nice try :)
 
