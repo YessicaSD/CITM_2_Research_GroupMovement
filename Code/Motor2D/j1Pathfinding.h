@@ -16,11 +16,13 @@
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
 
-
+struct SDL_Texture;
 class j1PathFinding : public j1Module
 {
+private:
+	p2DynArray<iPoint> debugPath;
 public:
-
+	SDL_Texture * debug_tex = nullptr;
 	j1PathFinding();
 
 	// Destructor
@@ -80,10 +82,10 @@ struct PathNode
 	int CalculateF(const iPoint& destination);
 
 	// -----------
-	int g;
+	int numSteps;
 	int h;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	const PathNode* parent = nullptr; // needed to reconstruct the path in the end
 };
 
 // ---------------------------------------------------------------------
@@ -93,14 +95,14 @@ struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
 	
-	std::list<PathNode>::iterator Find(const iPoint& point);
+	p2List_item<PathNode>* Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	std::list<PathNode>* GetNodeLowestScore() const;
+	p2List_item<PathNode>* PathList::GetNodeLowestScore() const;
 
 	// -----------
 	// The list itself, note they are not pointers!
-	std::list<PathNode> list;
+	p2List<PathNode> list;
 	
 };
 

@@ -53,6 +53,29 @@ bool j1PathFinding::PostUpdate()
 
 		}
 	}
+
+	if (createdDebugPath)
+	{
+		uint debugPathSize = debugPath.Count();
+		if (debugPathSize == 0)
+		{
+			const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+			uint sizeArray = path->Count();
+			for (uint i = 0; i < sizeArray; ++i)
+			{
+				debugPath.PushBack(*path->At(i));
+			}
+		}
+		else
+		{
+			for (uint i = 0; i < debugPathSize; ++i)
+			{
+				iPoint pos = App->map->MapToWorld(debugPath.At(i)->x, debugPath.At(i)->y);
+				App->render->Blit(debug_tex, pos.x, pos.y);
+			}
+		}
+
+	}
 	return true;
 }
 
@@ -109,26 +132,22 @@ const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------
-std::list<PathNode>::iterator PathList::Find(const iPoint& point) 
+p2List_item<PathNode>* PathList::Find(const iPoint& point)
 {
-	std::list<PathNode>::iterator item = list.begin();
-	uint listSize = list.size;
-
-	for (uint i = 0;  i < listSize; ++i)
+	p2List_item<PathNode>* item = list.start;
+	while (item)
 	{
-		if (item->pos == point)
+		if (item->data.pos == point)
 			return item;
-
-		++item;
+		item = item->next;
 	}
-	
-	return item;
+	return NULL;
 }
 
 // PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
 // ---------------------------------------------------------------------------------
-std::list<PathNode>* PathList::GetNodeLowestScore() const
+p2List_item<PathNode>* PathList::GetNodeLowestScore() const
 {
 	p2List_item<PathNode>* ret = NULL;
 	int min = 65535;
@@ -149,13 +168,13 @@ std::list<PathNode>* PathList::GetNodeLowestScore() const
 // PathNode -------------------------------------------------------------------------
 // Convenient constructors
 // ----------------------------------------------------------------------------------
-PathNode::PathNode() : g(-1), h(-1), pos(-1, -1), parent(NULL)
+PathNode::PathNode() : numSteps(-1), h(-1), pos(-1, -1), parent(NULL)
 {}
 
-PathNode::PathNode(int g, int h, const iPoint& pos, const PathNode* parent) : g(g), h(h), pos(pos), parent(parent)
+PathNode::PathNode(int g, int h, const iPoint& pos, const PathNode* parent) : numSteps(g), h(h), pos(pos), parent(parent)
 {}
 
-PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), parent(node.parent)
+PathNode::PathNode(const PathNode& node) : numSteps(node.numSteps), h(node.h), pos(node.pos), parent(node.parent)
 {}
 
 // PathNode -------------------------------------------------------------------------
@@ -165,6 +184,7 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 {
 	iPoint cell;
 	uint before = list_to_fill.list.count();
+		
 
 	// north
 	cell.create(pos.x, pos.y + 1);
@@ -194,7 +214,7 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 // ----------------------------------------------------------------------------------
 int PathNode::Score() const
 {
-	return g + h;
+	return numSteps + h;
 }
 
 // PathNode -------------------------------------------------------------------------
@@ -202,10 +222,10 @@ int PathNode::Score() const
 // ----------------------------------------------------------------------------------
 int PathNode::CalculateF(const iPoint& destination)
 {
-	g = parent->g + 1;
+	numSteps = parent->numSteps + 1;
 	h = pos.DistanceTo(destination);
 
-	return g + h;
+	return numSteps + h;
 }
 
 // ----------------------------------------------------------------------------------
@@ -213,14 +233,72 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	int ret = -1;
-
 	if (!IsWalkable(origin) || !IsWalkable(destination))
-		return ret;
+		return -1;
+
+	PathList openList, closeList;
+
+	openList.list.add({ 0, origin.DistanceTo(destination), origin, nullptr });
+
+	bool findDestination = false;
+
+	while (openList.list.count()>0 && !findDestination)
+	{
+		p2List_item<PathNode>* lowerNode = openList.GetNodeLowestScore();
+		p2List_item<PathNode>* currNode = closeList.list.add(lowerNode->data);
+		openList.list.del(lowerNode);
+
+		if (currNode->data.pos == destination)
+		{
+			findDestination = true;
+			break;
+		}
+
+		PathList neighbours;
+		currNode->data.FindWalkableAdjacents(neighbours);
 
 
-	// Nice try :)
+		for (p2List_item<PathNode>* nodeNeigh = neighbours.list.start; nodeNeigh; nodeNeigh = nodeNeigh->next)
+		{
+			p2List_item<PathNode>* closeItem = (p2List_item<PathNode>*) closeList.Find(nodeNeigh->data.pos);
+			p2List_item<PathNode>* openItem = (p2List_item<PathNode>*) openList.Find(nodeNeigh->data.pos);
 
-	return ret;
+			if (closeItem != NULL)
+				continue;
+
+			nodeNeigh->data.CalculateF(destination);
+			if (openItem == NULL)
+				openList.list.add(nodeNeigh->data);
+
+			else if (nodeNeigh->data.numSteps < openItem->data.numSteps)
+			{
+				openItem->data.parent = &currNode->data;
+
+			}
+
+
+		}
+
+
+	}
+	if (findDestination)
+	{
+		last_path.Clear();
+		const p2List_item<PathNode>* pathNode = closeList.list.end;
+		while (pathNode != NULL)
+		{
+			last_path.PushBack(pathNode->data.pos);
+			if (pathNode->data.parent != nullptr)
+				pathNode = closeList.Find(pathNode->data.parent->pos);
+			else
+				pathNode = NULL;
+		}
+
+		last_path.Flip();
+		return 1;
+	}
+
+
+	return -1;
 }
 
