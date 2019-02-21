@@ -12,7 +12,7 @@
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.create("scene");
+	name = "scene";
 }
 
 // Destructor
@@ -102,11 +102,11 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(),
-					map_coordinates.x, map_coordinates.y);
+	std::string title = "Map:" + std::to_string(App->map->data.width) + "x" + std::to_string(App->map->data.height) +
+		" Tiles:" + std::to_string(App->map->data.tile_width) + "x" + std::to_string(App->map->data.tile_height) +
+		"Num_Tiles:" + std::to_string(App->map->data.tilesets.count()) +
+		" Tile:" + std::to_string(map_coordinates.x) + "x" + std::to_string(map_coordinates.y);
+				
 
 	//App->win->SetTitle(title.GetString());
 
