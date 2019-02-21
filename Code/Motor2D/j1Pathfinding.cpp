@@ -19,6 +19,7 @@ j1PathFinding::~j1PathFinding()
 
 bool j1PathFinding::PostUpdate()
 {
+	
 	// https://www.youtube.com/watch?v=f7mtWD9GdJ4 
 	//Explanation to Local Statics
 
@@ -49,28 +50,29 @@ bool j1PathFinding::PostUpdate()
 			origin = p;
 			origin_selected = true;
 			createdDebugPath = false;
-			debugPath.Clear();
+			debugPath.clear();
 
 		}
 	}
 
 	if (createdDebugPath)
 	{
-		uint debugPathSize = debugPath.Count();
+		uint debugPathSize = debugPath.size();
 		if (debugPathSize == 0)
 		{
-			const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-			uint sizeArray = path->Count();
+		
+			const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
+			uint sizeArray = path->size();
 			for (uint i = 0; i < sizeArray; ++i)
 			{
-				debugPath.PushBack(*path->At(i));
+				debugPath.push_back(path->at(i));
 			}
 		}
 		else
 		{
 			for (uint i = 0; i < debugPathSize; ++i)
 			{
-				iPoint pos = App->map->MapToWorld(debugPath.At(i)->x, debugPath.At(i)->y);
+				iPoint pos = App->map->MapToWorld(debugPath.at(i).x, debugPath.at(i).y);
 				App->render->Blit(debug_tex, pos.x, pos.y);
 			}
 		}
@@ -84,7 +86,7 @@ bool j1PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
-	last_path.Clear();
+	last_path.clear();
 	RELEASE_ARRAY(map);
 	return true;
 }
@@ -124,7 +126,7 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 }
 
 // To request all tiles involved in the last generated path
-const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
+const std::vector<iPoint>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
 }
@@ -283,18 +285,23 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	}
 	if (findDestination)
 	{
-		last_path.Clear();
+		last_path.clear();
 		const p2List_item<PathNode>* pathNode = closeList.list.end;
 		while (pathNode != NULL)
 		{
-			last_path.PushBack(pathNode->data.pos);
+			last_path.push_back(pathNode->data.pos);
 			if (pathNode->data.parent != nullptr)
 				pathNode = closeList.Find(pathNode->data.parent->pos);
 			else
 				pathNode = NULL;
 		}
-
-		last_path.Flip();
+		//Here we flip last_path order -------------------------------------
+		std::vector<iPoint> aux;
+		for (uint i = last_path.size()-1; i > 0; --i)
+		{
+			aux.push_back(last_path.at(i));
+		}
+		last_path.swap(aux);
 		return 1;
 	}
 
