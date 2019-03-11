@@ -16,8 +16,6 @@ This content is generated for the second year’s subject Project 2, under super
  </p>
 <iframe width="560" height="315" src="https://youtu.be/ap3odnteoIs?t=59" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AGtd0KkOvG4?start=400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
 <h1>Reference information</h1>
 <ul style="list-style-type:disc;">
   <li>https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</li>
