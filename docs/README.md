@@ -8,9 +8,11 @@ This content is generated for the second year’s subject Project 2, under super
 
 <h1>Command & Conquer:Red Alert 2</h1>
 <p>
-- In this game units set they objetive before they start moving.
-- Althought the player click on one tile only one unity will reach place, the rest of them select as their goal nearby that tile but following the same direcction as the orginal tile and parallel to this.
-- Also some of the units got the same goel so when one unit reach the goel the other ones stop when they are next to that unit.
+ <ul style="list-style-type:disc;">
+  <li>In this game units set they objetive before they start moving.</li>
+  <li> Althought the player click on one tile only one unity will reach place, the rest of them select as their goal nearby that tile but following the same direcction as the orginal tile and parallel to this.</li>
+  <li>Also some of the units got the same goel so when one unit reach the goel the other ones stop when they are next to that unit.</li>
+</ul>
  </p>
  
 <iframe width="420" height="315" src="https://www.youtube.com/watch?v=ap3odnteoIs">
