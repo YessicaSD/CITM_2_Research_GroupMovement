@@ -8,7 +8,6 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Textures.h"
-#include "j1Audio.h"
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Pathfinding.h"
@@ -25,7 +24,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	win = new j1Window();
 	render = new j1Render();
 	tex = new j1Textures();
-	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
 	pathfinding = new j1PathFinding();
@@ -35,7 +33,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(win);
 	AddModule(tex);
-	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
 	AddModule(pathfinding);
@@ -50,21 +47,20 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	p2List_item<j1Module*>* item = modules.end;
-
-	while(item != NULL)
+	
+	int iter = modules.size();
+	for(std::vector<j1Module*>::iterator item = modules.begin() + iter; iter>0 ;--iter)
 	{
-		RELEASE(item->data);
-		item = item->prev;
+		RELEASE(*item);
+		item = modules.begin() + iter;
 	}
-
 	modules.clear();
 }
 
 void j1App::AddModule(j1Module* module)
 {
 	module->Init();
-	modules.add(module);
+	modules.push_back(module);
 }
 
 // Called before render is available
@@ -98,13 +94,13 @@ bool j1App::Awake()
 
 	if(ret == true)
 	{
-		p2List_item<j1Module*>* item;
-		item = modules.start;
+		std::vector<j1Module*>::iterator item;
+		item = modules.begin();
 
-		while(item != NULL && ret == true)
+		while(item != modules.end() && ret == true)
 		{
-			ret = item->data->Awake(config.child(item->data->name.c_str()));
-			item = item->next;
+			ret = (*item)->Awake(config.child((*item)->name.c_str()));
+			++item;
 		}
 	}
 
@@ -118,13 +114,13 @@ bool j1App::Start()
 {
 	PERF_START(ptimer);
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	std::vector<j1Module*>::iterator item;
+	item = modules.begin();
 
-	while(item != NULL && ret == true)
+	while(item != modules.end() && ret == true)
 	{
-		ret = item->data->Start();
-		item = item->next;
+		ret = (*item)->Start();
+		++item;
 	}
 	startup_time.Start();
 
@@ -220,19 +216,18 @@ void j1App::FinishUpdate()
 bool j1App::PreUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	std::vector<j1Module*>::iterator item  = modules.begin();
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item; item != modules.end() && ret == true; ++item)
 	{
-		pModule = item->data;
+		pModule = *item;
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PreUpdate(dt);
+		ret = (*item)->PreUpdate(dt);
 	}
 
 	return ret;
@@ -242,19 +237,19 @@ bool j1App::PreUpdate()
 bool j1App::DoUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	std::vector<j1Module*>::iterator item;
+	item = modules.begin();
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; ++item)
 	{
-		pModule = item->data;
+		pModule = *item;
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -264,18 +259,18 @@ bool j1App::DoUpdate()
 bool j1App::PostUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	std::vector<j1Module*>::iterator item;
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; ++item)
 	{
-		pModule = item->data;
+		pModule = *item;
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PostUpdate(dt);
+		ret = (*item)->PostUpdate(dt);
 	}
 
 	return ret;
@@ -286,13 +281,15 @@ bool j1App::CleanUp()
 {
 	PERF_START(ptimer);
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.end;
+	std::vector<j1Module*>::iterator item;
+	int iter= modules.size();
+	item = modules.begin()+iter;
 
-	while(item != NULL && ret == true)
+	while(iter > 0 && ret == true)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		ret = (*item)->CleanUp();
+		--iter;
+		item = modules.begin() + iter;
 	}
 
 	PERF_PEEK(ptimer);
@@ -372,20 +369,20 @@ bool j1App::LoadGameNow()
 
 		root = data.child("game_state");
 
-		p2List_item<j1Module*>* item = modules.start;
+		std::vector<j1Module*>::iterator item = modules.begin();
 		ret = true;
 
-		while(item != NULL && ret == true)
+		while(item != modules.end() && ret == true)
 		{
-			ret = item->data->Load(root.child(item->data->name.c_str()));
-			item = item->next;
+			ret = (*item)->Load(root.child((*item)->name.c_str()));
+			++item;
 		}
 
 		data.reset();
 		if(ret == true)
 			LOG("...finished loading");
 		else
-			LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name : "unknown");
+			LOG("...loading process interrupted with error on module %s", (item != modules.end()) ? (*item)->name : "unknown");
 	}
 	else
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game, result.description());
@@ -406,12 +403,12 @@ bool j1App::SavegameNow() const
 	
 	root = data.append_child("game_state");
 
-	p2List_item<j1Module*>* item = modules.start;
+	std::vector<j1Module*>::const_iterator item = modules.begin();
 
-	while(item != NULL && ret == true)
+	while(item != modules.end() && ret == true)
 	{
-		ret = item->data->Save(root.append_child(item->data->name.c_str()));
-		item = item->next;
+		ret = (*item)->Save(root.append_child((*item)->name.c_str()));
+		++item;
 	}
 
 	if(ret == true)
@@ -424,7 +421,7 @@ bool j1App::SavegameNow() const
 		LOG("... finished saving", save_game.c_str());
 	}
 	else
-		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name : "unknown");
+		LOG("Save process halted from an error in module %s", (item != modules.end()) ? (*item)->name : "unknown");
 
 	data.reset();
 	want_to_save = false;

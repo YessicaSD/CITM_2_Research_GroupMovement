@@ -3,7 +3,6 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Textures.h"
-#include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
@@ -104,7 +103,7 @@ bool j1Scene::Update(float dt)
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 	std::string title = "Map:" + std::to_string(App->map->data.width) + "x" + std::to_string(App->map->data.height) +
 		" Tiles:" + std::to_string(App->map->data.tile_width) + "x" + std::to_string(App->map->data.tile_height) +
-		"Num_Tiles:" + std::to_string(App->map->data.tilesets.count()) +
+		"Num_Tiles:" + std::to_string(App->map->data.tilesets.size()) +
 		" Tile:" + std::to_string(map_coordinates.x) + "x" + std::to_string(map_coordinates.y);
 				
 

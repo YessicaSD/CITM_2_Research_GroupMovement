@@ -6,6 +6,7 @@
 #include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 #include <list>
+#include <vector>
 // Modules
 class j1Window;
 class j1Input;
@@ -91,7 +92,7 @@ public:
 
 private:
 
-	p2List<j1Module*>	modules;
+	std::vector<j1Module*>	modules;
 	int					argc;
 	char**				args;
 

@@ -5,7 +5,7 @@
 #include <list>
 #include "p2Point.h"
 #include "j1Module.h"
-
+#include <vector>
 // ----------------------------------------------------
 struct Properties
 {
@@ -17,7 +17,7 @@ struct Properties
 
 	~Properties()
 	{
-		std::list<Property*>::iterator item;
+		std::vector<Property*>::iterator item;
 		item = list.begin();
 
 		while(item != list.end())
@@ -29,9 +29,9 @@ struct Properties
 		list.clear();
 	}
 
-	int Get(const char* name, int default_value = 0) const;
+	int Get(std::string name, int default_value = 0) const;
 
-	std::list<Property*>list;
+	std::vector<Property*> list;
 };
 
 // ----------------------------------------------------
@@ -93,8 +93,8 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
-	p2List<TileSet*>	tilesets;
-	p2List<MapLayer*>	layers;
+	std::vector<TileSet*>	tilesets;
+	std::vector<MapLayer*>	layers;
 };
 
 // ----------------------------------------------------

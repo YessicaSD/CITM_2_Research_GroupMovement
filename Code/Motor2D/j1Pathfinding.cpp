@@ -133,31 +133,33 @@ const std::vector<iPoint>* j1PathFinding::GetLastPath() const
 }
 
 // PathList ------------------------------------------------------------------------
-// Looks for a node in this list and returns it's list node or NULL
+// Looks for a node in this list and returns it's list node position number or -1
 // ---------------------------------------------------------------------------------
-std::list<PathNode>::iterator PathList::Find(const iPoint& point)
+int PathList::Find(const iPoint& point)
 {
-	std::list<PathNode>::iterator item = list.begin();
-	while (item!=list.end())
+	int list_pos=0;
+	std::vector<PathNode>::iterator item = list.begin();
+	
+	while (list_pos < list.size())
 	{
 		if ((*item).pos == point)
-			return item;
-		++item;
+			return list_pos;
+		++list_pos;
 		
 	}
-	return item;
+	return list_pos=-1;
 }
 
 // PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
 // ---------------------------------------------------------------------------------
-std::list<PathNode>::iterator PathList::GetNodeLowestScore() const
+std::vector<PathNode>::iterator PathList::GetNodeLowestScore()
 {
-	std::list<PathNode>::iterator ret;
+	std::vector<PathNode>::iterator ret;
 	int min = 65535;
 
-	std::list<PathNode>::iterator item = list.end;
-	while(item!=list.end)
+	std::vector<PathNode>::iterator item = list.end();
+	while(item!=list.end())
 	{
 		if((*item).Score() < min)
 		{
@@ -249,9 +251,9 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 	while (openList.list.size()>0 && !findDestination)
 	{
-		std::list<PathNode>::iterator lowerNode = openList.GetNodeLowestScore();
+		std::vector<PathNode>::iterator lowerNode = (std::vector<PathNode>::iterator)openList.GetNodeLowestScore();
 		closeList.list.push_back(*lowerNode);
-		std::list<PathNode>::iterator currNode = closeList.list.end();
+		std::vector<PathNode>::iterator currNode = closeList.list.end();
 		openList.list.erase(lowerNode);
 
 		if ((*currNode).pos == destination)
@@ -264,24 +266,25 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		(*currNode).FindWalkableAdjacents(neighbours);
 
 
-		for (std::list<PathNode>::iterator nodeNeigh = neighbours.list.begin(); nodeNeigh!= neighbours.list.end(); ++nodeNeigh)
+		for (std::vector<PathNode>::iterator nodeNeigh = neighbours.list.begin(); nodeNeigh!= neighbours.list.end(); ++nodeNeigh)
 		{
-			if (closeList.list.size() <= 0)
-			{
-				continue;
-			}
 
-			std::list<PathNode>::iterator closeItem = closeList.Find((*closeItem).pos);
+			int pos_close_list = closeList.Find((*nodeNeigh).pos);
+			if (pos_close_list == -1)
+				continue;
+			std::vector<PathNode>::iterator closeItem = closeList.list.begin() + pos_close_list;
 			//assert(closeItem != closeList.list.end());
-			std::list<PathNode>::iterator openItem = openList.Find((*nodeNeigh).pos);
+			std::vector<PathNode>::iterator openItem;
 
 			(*nodeNeigh).CalculateF(destination);
-			if (openItem == NULL)
-				openList.list.add(nodeNeigh->data);
-
-			else if (nodeNeigh->data.numSteps < openItem->data.numSteps)
+			if (int list_pos = openList.Find((*nodeNeigh).pos) == -1)
 			{
-				openItem->data.parent = &currNode->data;
+				openList.list.push_back(*nodeNeigh);
+			}
+			
+			else if ((*nodeNeigh).numSteps < (*openItem).numSteps)
+			{
+				(*openItem).parent = &(*currNode);
 
 			}
 
@@ -293,14 +296,16 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	if (findDestination)
 	{
 		last_path.clear();
-		const p2List_item<PathNode>* pathNode = closeList.list.end;
-		while (pathNode != NULL)
+		 std::vector<PathNode>::const_iterator pathNode = closeList.list.end();
+		while (pathNode != closeList.list.begin())
 		{
-			last_path.push_back(pathNode->data.pos);
-			if (pathNode->data.parent != nullptr)
-				pathNode = closeList.Find(pathNode->data.parent->pos);
-			else
-				pathNode = NULL;
+			last_path.push_back((*pathNode).pos);
+			if ((*pathNode).parent != nullptr)
+			{
+				int aux = closeList.Find((*pathNode).parent->pos);
+				pathNode = closeList.list.begin() + aux;
+			}
+				
 		}
 		//Here we flip last_path order -------------------------------------
 		std::vector<iPoint> aux;

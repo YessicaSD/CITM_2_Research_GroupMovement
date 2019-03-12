@@ -96,14 +96,14 @@ struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
 	
-	std::list<PathNode>::iterator Find(const iPoint& point);
+	int Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	std::list<PathNode>::iterator PathList::GetNodeLowestScore() const;
+	std::vector<PathNode>::iterator PathList::GetNodeLowestScore();
 
 	// -----------
 	// The list itself, note they are not pointers!
-	std::list<PathNode> list;
+	std::vector<PathNode> list;
 	
 };
 
