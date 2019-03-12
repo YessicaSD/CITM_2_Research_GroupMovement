@@ -85,7 +85,6 @@ public:
 	j1Input*			input = NULL;
 	j1Render*			render = NULL;
 	j1Textures*			tex = NULL;
-	j1Audio*			audio = NULL;
 	j1Scene*			scene = NULL;
 	j1Map*				map = NULL;
 	j1PathFinding*		pathfinding = NULL;
