@@ -20,4 +20,6 @@ This content is generated for the second year’s subject Project 2, under super
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
   <li>https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</li>
+ <li> https://www.gamasutra.com/view/feature/3314/coordinated_unit_movement.php?print=1</li>
+ <li>https://www.gamasutra.com/view/feature/3313/coordinated_unit_movement.php?print=1</li> 
 </ul>
