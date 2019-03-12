@@ -12,22 +12,22 @@ struct Collider;
 
 enum entities_types
 {
-	ENTITY,
-	UNKNOW,
+	ALLIED_INFANT,
+	MAX_ENTITIES,
 };
 class j1Entity 
 {
 protected: 
-	SDL_Texture * texture = nullptr;
-	Animation anim;
 	bool showPath= false;
 	
 public:
+	SDL_Texture * texture;
 	bool toDelete = false;
 	fPoint position = {0.0F,0.0F};
-	fPoint speed = { 0.0F,0.0F };
+	
+	iPoint TilePos = {0,0};
 	Collider* collider = nullptr;
-	entities_types type = UNKNOW;
+	entities_types type;
 	bool death = false;
 public:
 	j1Entity(fPoint position, SDL_Texture * tex, entities_types type);

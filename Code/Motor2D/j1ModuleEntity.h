@@ -12,6 +12,7 @@
 class j1Entities : public j1Module
 {
 public:
+	SDL_Texture * Entities_Textures[entities_types::MAX_ENTITIES];
 	std::vector<j1Entity*> list_Entities;
 	pugi::xml_document	enemiesFile;
 	pugi::xml_node entitiesNodeDoc;

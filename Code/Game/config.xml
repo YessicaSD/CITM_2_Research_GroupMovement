@@ -25,5 +25,38 @@
   <map>
     <folder>maps/</folder>
   </map>
+  <entitiesManager>
+    <Entities_Textures>
+      <Tex name="Allied_Unit" path="textures/AlliedInfant_IG.png"/>
+    </Entities_Textures>
+    <Animations>
+      <Allied_Unit>
+        <UnitDirection_Up>
+          <frame x="0" y="0" w="32" h="32"/>
+        </UnitDirection_Up>
+        <UnitDirection_Down>
+          
+        </UnitDirection_Down>
+        <UnitDirection_Left>
+          
+        </UnitDirection_Left>
+        <UnitDirection_Right>
+          
+        </UnitDirection_Right>
+        <UnitDirection_UpLeft>
+          
+        </UnitDirection_UpLeft>
+        <UnitDirection_UpRight>
+          
+        </UnitDirection_UpRight>
+        <UnitDirection_DownLeft>
+          
+        </UnitDirection_DownLeft>
 
+        <UnitDirection_DownRight>
+          
+        </UnitDirection_DownRight>
+      </Allied_Unit>
+    </Animations>
+  </entitiesManager>
 </config>

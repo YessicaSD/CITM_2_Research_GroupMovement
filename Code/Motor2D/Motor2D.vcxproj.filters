@@ -40,11 +40,14 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="j1Entity.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1ModuleEntity.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
+      <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
+    </ClCompile>
+    <ClCompile Include="Allied_Infant.cpp">
+      <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,11 +105,14 @@
     <ClInclude Include="Animation.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="j1Entity.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1ModuleEntity.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
+    </ClInclude>
+    <ClInclude Include="Allied_Infant.h">
+      <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +133,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Enitites">
+      <UniqueIdentifier>{551d8bc1-9ade-4fbb-bc9d-af18e288b8c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -15,7 +15,7 @@
 
 j1Entities::j1Entities()
 {
-	name = "entities";
+	name = "entitiesManager";
 }
 
 j1Entities::~j1Entities()
@@ -49,20 +49,6 @@ bool j1Entities::Awake(pugi::xml_node &node)
 bool j1Entities::Start()
 {
 	bool ret = true;
-	/*const char*	path = entitiesNodeDoc.child("player1").child("image").attribute("source").as_string();
-
-	if ((playerTexture = App->tex->Load(path))==nullptr)
-	{
-		LOG("ERROR LOADING TEXTURE PLAYER");
-		return ret = false;
-	}
-	path = entitiesNodeDoc.child("EnemiesImage").attribute("source").as_string();
-	if ((entitiesTexture = App->tex->Load(path)) == nullptr)
-	{
-		LOG("ERROR LOADING TEXTURE ENEMIES");
-		return ret = false;
-	}*/
-
 	return ret;
 }
 bool j1Entities::PreUpdate(float dt)
@@ -117,7 +103,7 @@ bool j1Entities::CleanUp()
 j1Entity* j1Entities::AddEntity(entities_types type, fPoint pos)
 {
 	j1Entity* newEntity = nullptr;
-	static_assert(UNKNOW >= 0, "code need update");
+	static_assert(MAX_ENTITIES >= 0, "code need update");
 	switch (type)
 	{
 	default: 
