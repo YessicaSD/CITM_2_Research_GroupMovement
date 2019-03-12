@@ -14,11 +14,10 @@ This content is generated for the second year’s subject Project 2, under super
   <li>Also some of the units got the same goel so when one unit reach the goel the other ones stop when they are next to that unit.</li>
 </ul>
  </p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/V5RyEadOXCY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+ 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ap3odnteoIs?start=57" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AGtd0KkOvG4?start=400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-<h1>Reference information</h1>
+<h2>Reference information</h2>
 <ul style="list-style-type:disc;">
   <li>https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</li>
 </ul>
