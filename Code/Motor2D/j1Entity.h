@@ -1,66 +1,42 @@
-#ifndef __j1ModuleEnemies_H__
-#define __j1ModuleEnemies_H__
+#ifndef __J1ENTITY_H_
+#define __J1ENTITY_H_
 
 #include "j1Module.h"
-#include "p2Point.h"
-#include "j1Textures.h"
-#include "p2Defs.h"
 #include "Animation.h"
-#include "j1Entity.h"
+#include "p2Point.h"
+#include "SDL/include/SDL_render.h"
 
+struct SDL_Texture;
+struct Collider;
 
-
-
-class j1Entity;
-class Player;
-
-struct EntitiesInfo
+enum entities_types
 {
-	entities_types type = UNKNOW;
-	fPoint pos = { 0.0F,0.0F };
-	EntitiesInfo(entities_types type, fPoint pos) :type(type), pos(pos) {}
-	EntitiesInfo() {}
+	UNKNOW,
 };
-
-
-class j1Entities : public j1Module
+class j1Entity 
 {
-private:
-	p2List<Animation*> entitiesAnimation;
-	bool LoadAnimations(pugi::xml_node animNode);
+protected: 
+	SDL_Texture * texture = nullptr;
+	float dt;
+	bool showPath= false;
 	
 public:
-	p2List<j1Entity*> list_Entities;
-	pugi::xml_document	enemiesFile;
-	pugi::xml_node entitiesNodeDoc;
-	SDL_Texture* playerTexture=nullptr;
-	SDL_Texture* entitiesTexture=nullptr;
-
-	j1Entity* entity_player = nullptr;
-	Player* player = nullptr;
+	bool toDelete = false;
+	fPoint position = {0.0F,0.0F};
+	fPoint speed = { 0.0F,0.0F };
+	Collider* collider = nullptr;
+	entities_types type = UNKNOW;
+	bool death = false;
 public:
+	j1Entity(fPoint position, SDL_Texture * tex, entities_types type);
+	virtual ~j1Entity();
+	
 
-	j1Entities();
-	~j1Entities();
-
-	bool Awake(pugi::xml_node&)override;
-	bool Start()override;
-	bool PreUpdate(float dt) override;
-	bool Update(float dt) override;
-	bool PostUpdate() override;
-	bool CleanUp() override;
-	void OnCollision(Collider* c1, Collider* c2) override;
-
-	j1Entity* AddEntity(const EntitiesInfo& entity);
-	bool DestroyEntity(p2List_item<j1Entity*>* entity);
-	void DestroyAllEntities();
-	uint fx_death;
-	uint fx_jump;
-	uint fx_batdeath;
-	uint fx_coin;
-private:
-	float dt=0.0F;
-
+	virtual bool PreUpdate(float dt) { return true; };
+	virtual void Move(float dt) {};
+	virtual void Draw() {};
+	virtual void OnCollision(Collider* collider) {};
+	
 };
-#endif // __ModuleEnemies_H__
 
+#endif // __j1ENTITY_H__
