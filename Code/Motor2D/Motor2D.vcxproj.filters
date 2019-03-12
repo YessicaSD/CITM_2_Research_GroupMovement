@@ -40,13 +40,13 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="j1ModuleEntity.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Entity.cpp">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClCompile>
-    <ClCompile Include="Allied_Infant.cpp">
+    <ClCompile Include="j1EntityManager.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicEntity.cpp">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,13 +105,13 @@
     <ClInclude Include="Animation.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="j1ModuleEntity.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Entity.h">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClInclude>
-    <ClInclude Include="Allied_Infant.h">
+    <ClInclude Include="j1EntityManager.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicEntiry.h">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClInclude>
   </ItemGroup>

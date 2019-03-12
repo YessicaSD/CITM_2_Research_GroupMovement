@@ -1,5 +1,5 @@
 #include "j1App.h"
-#include "j1ModuleEntity.h"
+#include "j1EntityManager.h"
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1Textures.h"
@@ -13,18 +13,18 @@
 
 
 
-j1Entities::j1Entities()
+j1EntityManager::j1EntityManager()
 {
 	name = "entitiesManager";
 }
 
-j1Entities::~j1Entities()
+j1EntityManager::~j1EntityManager()
 {
 
 }
 
 
-bool j1Entities::Awake(pugi::xml_node &node)
+bool j1EntityManager::Awake(pugi::xml_node &node)
 {
 	bool ret = true;
 	uint numEntity = 0;
@@ -40,12 +40,12 @@ bool j1Entities::Awake(pugi::xml_node &node)
 
 	return true;
 }
-bool j1Entities::Start()
+bool j1EntityManager::Start()
 {
 	bool ret = true;
 	return ret;
 }
-bool j1Entities::PreUpdate(float dt)
+bool j1EntityManager::PreUpdate(float dt)
 {
 	uint vec_size = list_Entities.size();
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter!= list_Entities.end(); ++iter)
@@ -63,7 +63,7 @@ bool j1Entities::PreUpdate(float dt)
 	return true;
 }
 
-bool j1Entities::Update(float dt)
+bool j1EntityManager::Update(float dt)
 {
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
@@ -73,7 +73,7 @@ bool j1Entities::Update(float dt)
 	return true;
 }
 
-bool j1Entities::PostUpdate(float dt)
+bool j1EntityManager::PostUpdate(float dt)
 {
 	
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
@@ -83,7 +83,7 @@ bool j1Entities::PostUpdate(float dt)
 	return true;
 }
 
-bool j1Entities::CleanUp()
+bool j1EntityManager::CleanUp()
 {
 	LOG("Freeing all enemies");
 	
@@ -94,7 +94,7 @@ bool j1Entities::CleanUp()
 }
 
 
-j1Entity* j1Entities::AddEntity(entities_types type, fPoint pos)
+j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)
 {
 	j1Entity* newEntity = nullptr;
 	static_assert(MAX_ENTITIES >= 0, "code need update");
@@ -111,7 +111,7 @@ j1Entity* j1Entities::AddEntity(entities_types type, fPoint pos)
 	return nullptr;
 }
 
-bool j1Entities::DestroyEntity(std::vector<j1Entity*>::iterator entity)
+bool j1EntityManager::DestroyEntity(std::vector<j1Entity*>::iterator entity)
 {
 	bool ret = true;
 	(*entity)->toDelete = false;
@@ -120,7 +120,7 @@ bool j1Entities::DestroyEntity(std::vector<j1Entity*>::iterator entity)
 	return ret;
 }
 
-void j1Entities::DestroyAllEntities()
+void j1EntityManager::DestroyAllEntities()
 {
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{

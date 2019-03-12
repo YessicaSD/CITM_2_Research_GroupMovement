@@ -9,7 +9,7 @@
 #include "j1Entity.h"
 #include <vector>
 
-class j1Entities : public j1Module
+class j1EntityManager : public j1Module
 {
 public:
 	SDL_Texture * Entities_Textures[entities_types::MAX_ENTITIES];
@@ -17,8 +17,8 @@ public:
 	pugi::xml_document	enemiesFile;
 	pugi::xml_node entitiesNodeDoc;
 
-	j1Entities();
-	~j1Entities();
+	j1EntityManager();
+	~j1EntityManager();
 
 	j1Entity* AddEntity(entities_types type,fPoint pos);
 	bool DestroyEntity(std::vector<j1Entity*>::iterator entity);

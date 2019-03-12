@@ -36,7 +36,7 @@ public:
 
 	virtual bool PreUpdate(float dt) { return true; };
 	virtual void Move(float dt) {};
-	virtual void Draw() {};
+	virtual void Draw(float dt) {};
 	//virtual void OnCollision(Collider* collider) {};
 	
 };
