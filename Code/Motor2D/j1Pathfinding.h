@@ -29,7 +29,7 @@ public:
 	// Destructor
 	~j1PathFinding();
 
-	bool PostUpdate() override;
+	bool PostUpdate(float dt) override;
 	// Called before quitting
 	bool CleanUp();
 

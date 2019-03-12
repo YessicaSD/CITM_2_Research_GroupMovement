@@ -17,7 +17,7 @@ j1PathFinding::~j1PathFinding()
 	RELEASE_ARRAY(map);
 }
 
-bool j1PathFinding::PostUpdate()
+bool j1PathFinding::PostUpdate(float dt)
 {
 	
 	// https://www.youtube.com/watch?v=f7mtWD9GdJ4 
