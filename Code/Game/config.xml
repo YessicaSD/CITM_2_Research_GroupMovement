@@ -31,55 +31,7 @@
     </Entities_Textures>
     <Animations>
       <Allied_Unit>
-        <state name="idle">
-          <direction name="Up">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="Down">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="Left">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="Right" >
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="UpLeft">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="UpRight">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="DownLeft">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-        </state>
-        <state name="Walk">
-           <direction name="Up">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="Down">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="Left">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="Right" >
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="UpLeft">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="UpRight">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-          <direction name="DownLeft">
-            <frame x="498" y="1744" w="16" h="27"/>
-          </direction>
-        </state>
-        <UnitDirection_DownRight>
-          
-        </UnitDirection_DownRight>
+          <frame x="576" y="143" w="16" h="27"/>
       </Allied_Unit>
     </Animations>
   </entitiesManager>

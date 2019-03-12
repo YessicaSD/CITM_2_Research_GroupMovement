@@ -28,7 +28,7 @@ public:
 	Unit_State state = IDLE;
 	Unit_Direction diretion;
 	fPoint speed = { 0.0F,0.0F };
-	Animation Anim[MAX_STATE][UnitDirection_MaxDirections];
+	Animation* Anim;
 	void Draw(float dt) override;
 };
 

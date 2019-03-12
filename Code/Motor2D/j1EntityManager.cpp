@@ -31,26 +31,25 @@ bool j1EntityManager::Awake(pugi::xml_node &node)
 	//Loading Textures
 	for (pugi::xml_node TexNodes = node.child("Entities_Textures").child("Tex"); TexNodes;TexNodes=TexNodes.next_sibling())
 	{
-		Entities_Textures[numEntity]=App->tex->Load(TexNodes.attribute("path").as_string());
+		Allied_Info.path = TexNodes.attribute("path").as_string();
 		++numEntity;
 	}
-	//Loading Animations
-	uint state_num = 0;
-	uint direction = 0;
-	for (pugi::xml_node animNode = node.child("Animations").child("Allied_Unit").child("state"); animNode; animNode.next_sibling("state"))
+
+	for (pugi::xml_node animNode = node.child("Animations").child("Allied_Unit").child("frame"); animNode; animNode=animNode.next_sibling("frame"))
 	{
-		for (pugi::xml_node directionNode = animNode.first_child();directionNode; directionNode=directionNode.next_sibling("direction"))
-		{
-			Allied_Info.AnimInfo[state_num][direction];
-		}
-		++state_num;
-		++direction;
+		SDL_Rect frame;
+		frame.x = animNode.attribute("x").as_int();
+		frame.y = animNode.attribute("y").as_int();
+		frame.w = animNode.attribute("w").as_int();
+		frame.h = animNode.attribute("h").as_int();
+		Allied_Info.AnimInfo.PushBack(frame);
 	}
 	return true;
 }
 bool j1EntityManager::Start()
 {
 	bool ret = true;
+	Entities_Textures[ALLIED_INFANT] = App->tex->Load(Allied_Info.path.c_str());
 	return ret;
 }
 bool j1EntityManager::PreUpdate(float dt)
@@ -109,8 +108,14 @@ j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)
 	switch (type)
 	{
 	case ALLIED_INFANT:
+	{
 		newEntity = new DynamicEntity(pos, Entities_Textures[type], type);
-		break;
+		DynamicEntity* DynPointer = (DynamicEntity*)newEntity;
+		DynPointer->Anim = &Allied_Info.AnimInfo;
+	}
+		
+	break;
+
 	default: 
 		assert(!"The default case of AddEntity switch was reached.");
 		break;

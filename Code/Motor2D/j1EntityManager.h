@@ -11,7 +11,8 @@
 #include <vector> 
 struct Allied_Infa_Info
 {
-	Animation AnimInfo[MAX_STATE][UnitDirection_MaxDirections];
+	std::string path;
+	Animation AnimInfo;
 };
 class j1EntityManager : public j1Module
 {

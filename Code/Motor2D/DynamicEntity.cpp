@@ -8,5 +8,5 @@ DynamicEntity::DynamicEntity(fPoint position, SDL_Texture * tex, entities_types 
 }
 void DynamicEntity::Draw(float dt)
 {
-	App->render->Blit(texture, position.x, position.y,&Anim[state][diretion].GetCurrentFrame(dt));
+	App->render->Blit(texture, position.x, position.y,&Anim->GetCurrentFrame(dt));
 }
