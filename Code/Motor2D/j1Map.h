@@ -2,10 +2,10 @@
 #define __j1MAP_H__
 
 #include "PugiXml/src/pugixml.hpp"
-#include <list>
+#include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
-#include <vector>
+#include <list>
 // ----------------------------------------------------
 struct Properties
 {
@@ -17,21 +17,20 @@ struct Properties
 
 	~Properties()
 	{
-		std::vector<Property*>::iterator item;
-		item = list.begin();
+		std::list<Property*>::iterator item = list.begin();
 
 		while(item != list.end())
 		{
 			RELEASE(*item);
-			item = ++item;
+			++item ;
 		}
 
 		list.clear();
 	}
 
-	int Get(std::string name, int default_value = 0) const;
+	int Get(const char* name, int default_value = 0) const;
 
-	std::vector<Property*> list;
+	std::list<Property*>	list;
 };
 
 // ----------------------------------------------------
@@ -93,8 +92,8 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
-	std::vector<TileSet*>	tilesets;
-	std::vector<MapLayer*>	layers;
+	std::list<TileSet*>	tilesets;
+	std::list<MapLayer*>	layers;
 };
 
 // ----------------------------------------------------

@@ -1,12 +1,13 @@
 #ifndef __j1APP_H__
 #define __j1APP_H__
 
+#include "p2List.h"
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 #include <list>
-#include <vector>
+
 // Modules
 class j1Window;
 class j1Input;
@@ -16,7 +17,6 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class j1PathFinding;
-class j1ModuleEntity;
 
 class j1App
 {
@@ -52,7 +52,7 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(std::list<std::string>& list_to_fill) const;
+	void GetSaveGames(p2List<std::string>& list_to_fill) const;
 
 private:
 
@@ -79,6 +79,7 @@ private:
 	bool SavegameNow() const;
 
 public:
+
 	// Modules
 	j1Window*			win = NULL;
 	j1Input*			input = NULL;
@@ -88,11 +89,10 @@ public:
 	j1Scene*			scene = NULL;
 	j1Map*				map = NULL;
 	j1PathFinding*		pathfinding = NULL;
-	j1ModuleEntity*		entity = NULL;
 
 private:
 
-	std::vector<j1Module*>	modules;
+	std::list<j1Module*>	modules;
 	int					argc;
 	char**				args;
 
