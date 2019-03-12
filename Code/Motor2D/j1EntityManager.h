@@ -7,10 +7,16 @@
 #include "p2Defs.h"
 #include "Animation.h"
 #include "j1Entity.h"
-#include <vector>
-
+#include "DynamicEntity.h"
+#include <vector> 
+struct Allied_Infa_Info
+{
+	Animation AnimInfo[MAX_STATE][UnitDirection_MaxDirections];
+};
 class j1EntityManager : public j1Module
 {
+private:
+	Allied_Infa_Info Allied_Info;
 public:
 	SDL_Texture * Entities_Textures[entities_types::MAX_ENTITIES];
 	std::vector<j1Entity*> list_Entities;

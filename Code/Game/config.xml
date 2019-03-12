@@ -31,28 +31,52 @@
     </Entities_Textures>
     <Animations>
       <Allied_Unit>
-        <Up>
-          <frame x="498" y="1744" w="16" h="27"/>
-        </Up>
-        <Down>
-          <frame x="498" y="1744" w="16" h="27"/>
-        </Down>
-        <Left>
-          <frame x="498" y="1744" w="16" h="27"/>
-        </Left>
-        <Right>
-          <frame x="498" y="1744" w="16" h="27"/>
-        </Right>
-        <UpLeft>
-          <frame x="498" y="1744" w="16" h="27"/>
-        </UpLeft>
-        <UpRight>
-          <frame x="498" y="1744" w="16" h="27"/>
-        </UpRight>
-        <DownLeft>
-          <frame x="498" y="1744" w="16" h="27"/>
-        </DownLeft>
-
+        <state name="idle">
+          <direction name="Up">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="Down">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="Left">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="Right" >
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="UpLeft">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="UpRight">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="DownLeft">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+        </state>
+        <state name="Walk">
+           <direction name="Up">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="Down">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="Left">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="Right" >
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="UpLeft">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="UpRight">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+          <direction name="DownLeft">
+            <frame x="498" y="1744" w="16" h="27"/>
+          </direction>
+        </state>
         <UnitDirection_DownRight>
           
         </UnitDirection_DownRight>

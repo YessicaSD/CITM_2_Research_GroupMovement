@@ -35,9 +35,17 @@ bool j1EntityManager::Awake(pugi::xml_node &node)
 		++numEntity;
 	}
 	//Loading Animations
-
-	
-
+	uint state_num = 0;
+	uint direction = 0;
+	for (pugi::xml_node animNode = node.child("Animations").child("Allied_Unit").child("state"); animNode; animNode.next_sibling("state"))
+	{
+		for (pugi::xml_node directionNode = animNode.first_child();directionNode; directionNode=directionNode.next_sibling("direction"))
+		{
+			Allied_Info.AnimInfo[state_num][direction];
+		}
+		++state_num;
+		++direction;
+	}
 	return true;
 }
 bool j1EntityManager::Start()
@@ -78,7 +86,7 @@ bool j1EntityManager::PostUpdate(float dt)
 	
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
-			(*iter)->Draw();
+			(*iter)->Draw(dt);
 		}
 	return true;
 }
@@ -100,6 +108,9 @@ j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)
 	static_assert(MAX_ENTITIES >= 0, "code need update");
 	switch (type)
 	{
+	case ALLIED_INFANT:
+		newEntity = new DynamicEntity(pos, Entities_Textures[type], type);
+		break;
 	default: 
 		assert(!"The default case of AddEntity switch was reached.");
 		break;

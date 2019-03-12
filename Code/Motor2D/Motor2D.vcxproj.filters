@@ -111,7 +111,7 @@
     <ClInclude Include="j1EntityManager.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicEntiry.h">
+    <ClInclude Include="DynamicEntity.h">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClInclude>
   </ItemGroup>

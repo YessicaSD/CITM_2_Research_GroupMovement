@@ -9,6 +9,8 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Scene.h"
+#include "j1EntityManager.h"
+#include "p2Point.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -79,9 +81,12 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	iPoint aux;
+	App->input->GetMousePosition(aux.x, aux.y);
+	fPoint MousePos = { (float)aux.x,(float)aux.y };
 	if (App->input->GetKey(SDL_SCANCODE_1))
 	{
-		
+		App->entities->AddEntity(entities_types::ALLIED_INFANT, MousePos);
 	}
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");

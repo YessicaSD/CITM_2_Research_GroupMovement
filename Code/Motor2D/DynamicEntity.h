@@ -19,14 +19,16 @@ enum Unit_State
 {
 	IDLE,
 	WALK,
-	DEAD,
 	MAX_STATE
 };
 class DynamicEntity: public j1Entity
 {
+public:
+	DynamicEntity(fPoint position, SDL_Texture * tex, entities_types type);
 	Unit_State state = IDLE;
+	Unit_Direction diretion;
 	fPoint speed = { 0.0F,0.0F };
-	Animation Anim[MAX_STATE];
+	Animation Anim[MAX_STATE][UnitDirection_MaxDirections];
 	void Draw(float dt) override;
 };
 
