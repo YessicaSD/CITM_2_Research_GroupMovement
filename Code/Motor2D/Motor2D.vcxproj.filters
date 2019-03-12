@@ -111,6 +111,9 @@
     <ClInclude Include="j1ModuleEntity.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Group_Movement.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

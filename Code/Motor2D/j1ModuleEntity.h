@@ -7,18 +7,6 @@
 #include "p2Defs.h"
 #include "Animation.h"
 #include "j1Entity.h"
-enum entities_types
-{
-	UNKNOWN,
-	MAX_ENTITES_TYPE
-};
-struct EntitiesInfo
-{
-	entities_types type = entities_types::UNKNOWN;
-	fPoint pos = { 0.0F,0.0F };
-	EntitiesInfo(entities_types type, fPoint pos) :type(type), pos(pos) {}
-	EntitiesInfo() {}
-};
 
 
 class j1Entities : public j1Module
@@ -42,13 +30,9 @@ public:
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
 
-	j1Entity* AddEntity(const EntitiesInfo& entity);
-	bool DestroyEntity(p2List_item<j1Entity*>* entity);
+	j1Entity* AddEntity(entities_types type,fPoint pos);
+	bool DestroyEntity(std::vector<j1Entity*>::iterator entity);
 	void DestroyAllEntities();
-	uint fx_death;
-	uint fx_jump;
-	uint fx_batdeath;
-	uint fx_coin;
 private:
 	float dt=0.0F;
 

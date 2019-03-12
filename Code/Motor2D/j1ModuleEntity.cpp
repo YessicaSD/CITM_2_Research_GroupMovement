@@ -46,17 +46,12 @@ bool j1Entities::Awake(pugi::xml_node &node)
 		return ret = false;
 	}
 
-	fx_death = App->audio->LoadFx("audio/fx/smw_stomp_bones.wav");
-	fx_jump = App->audio->LoadFx("audio/fx/jump.wav");
-	fx_batdeath = App->audio->LoadFx("audio/fx/bat_death.wav");
-	fx_coin = App->audio->LoadFx("audio/fx/coin2.wav");
-
 	return true;
 }
 bool j1Entities::Start()
 {
 	bool ret = true;
-	const char*	path = entitiesNodeDoc.child("player1").child("image").attribute("source").as_string();
+	/*const char*	path = entitiesNodeDoc.child("player1").child("image").attribute("source").as_string();
 
 	if ((playerTexture = App->tex->Load(path))==nullptr)
 	{
@@ -68,7 +63,7 @@ bool j1Entities::Start()
 	{
 		LOG("ERROR LOADING TEXTURE ENEMIES");
 		return ret = false;
-	}
+	}*/
 
 	return ret;
 }
@@ -77,37 +72,28 @@ bool j1Entities::PreUpdate(float dt)
 	BROFILER_CATEGORY("PreUpdate_ModuleEntity.cpp", Profiler::Color::Salmon)
 	this->dt = dt;
 	uint vec_size = list_Entities.size();
-	for (uint i = 0; i < vec_size; ++i)
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter!= list_Entities.end(); ++iter)
 	{
-		std::vector<j1Entity*>::iterator iter = list_Entities.begin();
-		(*iter)->toDelete == true;
-	}
-	p2List_item<j1Entity*>* actualEntity=nullptr;
-	for (actualEntity = list_Entities.start; actualEntity; actualEntity = actualEntity->next)
-	{
-		if (actualEntity->data->toDelete == true)
+		if ((*iter)->toDelete == true)
 		{
-			vector<>DestroyEntity(actualEntity);
+			list_Entities.erase(iter);
 		}
 		else
 		{
-			actualEntity->data->PreUpdate(dt);
-			
+			(*iter)->PreUpdate(dt);
 		}
 	}
+
 	return true;
 }
 
 bool j1Entities::Update(float dt)
 {
 	BROFILER_CATEGORY("Update_ModuleEntity.cpp", Profiler::Color::Coral)
-	p2List_item<j1Entity*>* actualEntity = nullptr;
 
-	for (actualEntity = list_Entities.start; actualEntity; actualEntity = actualEntity->next)
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
-		
-		actualEntity->data->Move(dt);
-		
+		(*iter)->Move(dt);
 	}
 	
 	return true;
@@ -116,11 +102,10 @@ bool j1Entities::Update(float dt)
 bool j1Entities::PostUpdate(float dt)
 {
 	BROFILER_CATEGORY("PostUpdate_ModuleEntity.cpp", Profiler::Color::MediumSlateBlue)
-	p2List_item<j1Entity*>* actualEntity = nullptr;
-	for (actualEntity = list_Entities.start; actualEntity; actualEntity = actualEntity->next)
-	{
-		actualEntity->data->Draw();
-	}
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+		{
+			(*iter)->Draw();
+		}
 	return true;
 }
 
@@ -137,53 +122,51 @@ bool j1Entities::CleanUp()
 	{
 		App->tex->UnLoad(entitiesTexture);
 	}
-	if (list_Entities.Count() > 0)
+	if (list_Entities.size() > 0)
 		DestroyAllEntities();
 
 	return true;
 }
 
 
-j1Entity* j1Entities::AddEntity(const EntitiesInfo& entity)
+j1Entity* j1Entities::AddEntity(entities_types type, fPoint pos)
 {
 	BROFILER_CATEGORY("AddEntity", Profiler::Color::Green)
 	j1Entity* newEntity = nullptr;
-	static_assert(UNKNOW >= 3, "code need update");
-	switch (entity.type)
+	static_assert(UNKNOW >= 0, "code need update");
+	switch (type)
 	{
 	default: 
-		assert(entity.type)
+		assert(!"The default case of AddEntity switch was reached.");
 		break;
 	}
-		list_Entities.add(newEntity);
+
+	if(newEntity!=nullptr)
+		list_Entities.push_back(newEntity);
 
 	return nullptr;
 }
 
-bool j1Entities::DestroyEntity(p2List_item<j1Entity*>* entity)
+bool j1Entities::DestroyEntity(std::vector<j1Entity*>::iterator entity)
 {
 	bool ret = true;
-	entity->data->toDelete = false;
-	RELEASE(entity->data);
-	list_Entities.del(entity);
+	(*entity)->toDelete = false;
+	RELEASE(*entity);
+	list_Entities.erase(entity);
 	return ret;
 }
 
 void j1Entities::DestroyAllEntities()
 {
-	if (list_Entities.Count() > 0)
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
-		p2List_item<j1Entity*>* itemEntity = nullptr;
-		for (itemEntity = list_Entities.end; itemEntity != nullptr; itemEntity = itemEntity->prev)
-		{
-			delete itemEntity->data;
-		}
-		list_Entities.clear();
-	}
+		delete *iter;
 
-	
+	}
+	list_Entities.clear();
 }
 
+/*
 bool j1Entities::LoadAnimations(pugi::xml_node animNode) 
 {
 	bool ret = true;
@@ -214,6 +197,6 @@ bool j1Entities::LoadAnimations(pugi::xml_node animNode)
 	return ret;
 }
 
-
+*/
 
 
