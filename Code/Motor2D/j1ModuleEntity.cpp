@@ -13,11 +13,11 @@
 
 #include <assert.h>
 
-#include "Brofiler/Brofiler.h"
+
 
 j1Entities::j1Entities()
 {
-	name.create("entities");
+	name = "entities";
 }
 
 j1Entities::~j1Entities()
@@ -69,8 +69,6 @@ bool j1Entities::Start()
 }
 bool j1Entities::PreUpdate(float dt)
 {
-	BROFILER_CATEGORY("PreUpdate_ModuleEntity.cpp", Profiler::Color::Salmon)
-	this->dt = dt;
 	uint vec_size = list_Entities.size();
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter!= list_Entities.end(); ++iter)
 	{
@@ -89,8 +87,6 @@ bool j1Entities::PreUpdate(float dt)
 
 bool j1Entities::Update(float dt)
 {
-	BROFILER_CATEGORY("Update_ModuleEntity.cpp", Profiler::Color::Coral)
-
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
 		(*iter)->Move(dt);
@@ -101,7 +97,7 @@ bool j1Entities::Update(float dt)
 
 bool j1Entities::PostUpdate(float dt)
 {
-	BROFILER_CATEGORY("PostUpdate_ModuleEntity.cpp", Profiler::Color::MediumSlateBlue)
+	
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
 			(*iter)->Draw();
@@ -111,17 +107,8 @@ bool j1Entities::PostUpdate(float dt)
 
 bool j1Entities::CleanUp()
 {
-	BROFILER_CATEGORY("CleanUpEntities", Profiler::Color::Blue)
 	LOG("Freeing all enemies");
 	
-	if (playerTexture != nullptr)
-	{
-		App->tex->UnLoad(playerTexture);
-	}
-	if (entitiesTexture!=nullptr)
-	{
-		App->tex->UnLoad(entitiesTexture);
-	}
 	if (list_Entities.size() > 0)
 		DestroyAllEntities();
 
@@ -131,7 +118,6 @@ bool j1Entities::CleanUp()
 
 j1Entity* j1Entities::AddEntity(entities_types type, fPoint pos)
 {
-	BROFILER_CATEGORY("AddEntity", Profiler::Color::Green)
 	j1Entity* newEntity = nullptr;
 	static_assert(UNKNOW >= 0, "code need update");
 	switch (type)

@@ -29,9 +29,9 @@ public:
 	// Destructor
 	~j1PathFinding();
 
-	bool PostUpdate() override;
+	bool PostUpdate(float dt) override;
 	// Called before quitting
-	bool CleanUp();
+	bool CleanUp() override;
 
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
@@ -96,14 +96,14 @@ struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
 	
-	p2List_item<PathNode>* Find(const iPoint& point);
+	std::list<PathNode>::iterator Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	p2List_item<PathNode>* PathList::GetNodeLowestScore() const;
+	std::list<PathNode>::iterator PathList::GetNodeLowestScore() const;
 
 	// -----------
 	// The list itself, note they are not pointers!
-	p2List<PathNode> list;
+	std::list<PathNode> list;
 	
 };
 
