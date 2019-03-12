@@ -31,27 +31,27 @@
     </Entities_Textures>
     <Animations>
       <Allied_Unit>
-        <UnitDirection_Up>
-          <frame x="0" y="0" w="32" h="32"/>
-        </UnitDirection_Up>
-        <UnitDirection_Down>
-          
-        </UnitDirection_Down>
-        <UnitDirection_Left>
-          
-        </UnitDirection_Left>
-        <UnitDirection_Right>
-          
-        </UnitDirection_Right>
-        <UnitDirection_UpLeft>
-          
-        </UnitDirection_UpLeft>
-        <UnitDirection_UpRight>
-          
-        </UnitDirection_UpRight>
-        <UnitDirection_DownLeft>
-          
-        </UnitDirection_DownLeft>
+        <Up>
+          <frame x="498" y="1744" w="16" h="27"/>
+        </Up>
+        <Down>
+          <frame x="498" y="1744" w="16" h="27"/>
+        </Down>
+        <Left>
+          <frame x="498" y="1744" w="16" h="27"/>
+        </Left>
+        <Right>
+          <frame x="498" y="1744" w="16" h="27"/>
+        </Right>
+        <UpLeft>
+          <frame x="498" y="1744" w="16" h="27"/>
+        </UpLeft>
+        <UpRight>
+          <frame x="498" y="1744" w="16" h="27"/>
+        </UpRight>
+        <DownLeft>
+          <frame x="498" y="1744" w="16" h="27"/>
+        </DownLeft>
 
         <UnitDirection_DownRight>
           

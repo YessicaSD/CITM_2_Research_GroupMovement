@@ -27,22 +27,16 @@ j1Entities::~j1Entities()
 bool j1Entities::Awake(pugi::xml_node &node)
 {
 	bool ret = true;
-	const char* path = node.child_value();
-	LOG("%s", node.child_value());
-	pugi::xml_parse_result result = enemiesFile.load_file(path);
-	if (result == NULL)
+	uint numEntity = 0;
+	//Loading Textures
+	for (pugi::xml_node TexNodes = node.child("Entities_Textures").child("Tex"); TexNodes;TexNodes=TexNodes.next_sibling())
 	{
-		LOG("ERROR ENTITIES LOADING FILE %s", result.description());
-		return ret = false;
+		Entities_Textures[numEntity]=App->tex->Load(TexNodes.attribute("path").as_string());
+		++numEntity;
 	}
+	//Loading Animations
 
-	entitiesNodeDoc = enemiesFile.child("entities");
-
-	if (!entitiesNodeDoc)
-	{
-		LOG("ERROR ENTITIES LOADING FILE ");
-		return ret = false;
-	}
+	
 
 	return true;
 }
