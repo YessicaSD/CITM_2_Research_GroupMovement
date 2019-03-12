@@ -13,9 +13,7 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1App.h"
-//ESTE ES EL BUENO
-
-// TODO 3:  Add Brofiler categories to all Update methods
+using namespace std;
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,7 +24,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	win = new j1Window();
 	render = new j1Render();
 	tex = new j1Textures();
-
 	scene = new j1Scene();
 	map = new j1Map();
 	pathfinding = new j1PathFinding();
@@ -51,7 +48,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	std::list<j1Module*>::reverse_iterator item;
+	list<j1Module*>::reverse_iterator item;
 	item = modules.rbegin();
 
 	while (item != modules.rend())
