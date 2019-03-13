@@ -72,21 +72,30 @@ bool j1EntityManager::PreUpdate(float dt)
 
 bool j1EntityManager::Update(float dt)
 {
+	//Get mouse pos
+	iPoint mouse_pos;
+	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
+
 	static iPoint Pos_Mouse_ClickDown;
 	static iPoint Pos_Mouse_ClickRepeat;
-	static j1KeyState last_righ_click_state;
+	
 	static SDL_Rect selection_rect;
 	//Here we get the right click position in click down ------------------------------------
 	if (App->input->GetMouseButtonState(3)== j1KeyState::KEY_DOWN)
 	{
+		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
+		{
+			(*iter)->selected = false;
+		}
+		selected_units.clear();
 		App->input->GetMousePosition(Pos_Mouse_ClickDown.x, Pos_Mouse_ClickDown.y);
-		last_righ_click_state = j1KeyState::KEY_DOWN;
+	
 	}
 
 	//Here we generete the seletion area --------------------------------------------------------------------------------------
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_REPEAT)
 	{
-		App->input->GetMousePosition(Pos_Mouse_ClickRepeat.x, Pos_Mouse_ClickRepeat.y);
+		Pos_Mouse_ClickRepeat = mouse_pos;
 		selection_rect.x = (Pos_Mouse_ClickDown.x < Pos_Mouse_ClickRepeat.x) ? Pos_Mouse_ClickDown.x : Pos_Mouse_ClickRepeat.x;
 		selection_rect.y = (Pos_Mouse_ClickDown.y < Pos_Mouse_ClickRepeat.y) ? Pos_Mouse_ClickDown.y : Pos_Mouse_ClickRepeat.y;
 		selection_rect.w = abs(Pos_Mouse_ClickRepeat.x - Pos_Mouse_ClickDown.x);
@@ -96,11 +105,11 @@ bool j1EntityManager::Update(float dt)
 	}
 
 	//When we realese the right button from the mouse we select entites that are inside the selection area-------------------------
-	//TODO 1: Here we are going to calculate the middle point-------------------------------------------------------------------------
+
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_UP)
 	{
 		selected_units.clear();
-		middlePoint_Group.SetToZero();
+		
 		for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
 			if ((*iter)->position.x >= selection_rect.x
@@ -110,12 +119,14 @@ bool j1EntityManager::Update(float dt)
 			{
 				(*iter)->selected = true;
 				selected_units.push_back(*iter);
-				middlePoint_Group += (*iter)->position;
+				
 			}
 
 		}
-		middlePoint_Group /= selected_units.size();
+		
 	}
+	
+	
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
@@ -125,14 +136,27 @@ bool j1EntityManager::Update(float dt)
 		selected_units.clear();
 	}
 
-	iPoint destination  = App->input->GetMousePos_Tiles();
-	if (App->input->GetMouseButtonState(1) == j1KeyState::KEY_DOWN && App->pathfinding->IsWalkable(destination))
+
+	//Here we click the destination-----------------------------------------------------------------------------
+	//TODO 2: Now for each entity find it's goal respecting original collocation
+	
+	if (App->input->GetMouseButtonState(1) == j1KeyState::KEY_DOWN && App->pathfinding->IsWalkable(App->input->GetMousePos_Tiles()))
 	{
+		Calculate_middle_Point();
+		iPoint fl_mousePos_px = App->render->ScreenToWorld(mouse_pos.x, mouse_pos.y);
+		iPoint destination;
+		iPoint Pixels_Destination = fl_mousePos_px;
+		//Center it 
+		Pixels_Destination += {(int)(App->map->data.tile_width*0.5), (int)(App->map->data.tile_height*0.5)};
 		iPoint origin;
 		
 		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
 		{
 			origin=App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
+			iPoint distance_middlePoint = (*iter)->position.ReturniPoint() - middlePoint_Group.ReturniPoint();
+			iPoint Pixels_goal = (distance_middlePoint + fl_mousePos_px).ReturniPoint();
+			destination = App->map->WorldToMap((int)Pixels_goal.x, (int)Pixels_goal.y);
+
 			if (App->pathfinding->CreatePath(origin, destination) != -1)
 			{
 				DynamicEntity* selectedUnit = (DynamicEntity*)(*iter);
@@ -236,37 +260,13 @@ j1Entity* j1EntityManager::InThisTile_IsUnits(iPoint tile)
 	return ret;
 }
 
-/*
-bool j1Entities::LoadAnimations(pugi::xml_node animNode) 
+fPoint j1EntityManager::Calculate_middle_Point()
 {
-	bool ret = true;
-	int numAnim = 0;
-	for (pugi::xml_node thisanimNode = animNode; thisanimNode; thisanimNode = thisanimNode.next_sibling("animation"))
-		++numAnim;
-
-	Animation* anim_aux = new Animation[numAnim];
-
-	SDL_Rect frameRect;
-	int animArrayNum = 0;
-	for (pugi::xml_node thisAnimNode = animNode; thisAnimNode; thisAnimNode = thisAnimNode.next_sibling("animation"))
+	middlePoint_Group.SetToZero();
+	for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
 	{
-		anim_aux[animArrayNum].speed = thisAnimNode.attribute("anim_speed").as_float();
-		for (pugi::xml_node frame = thisAnimNode.child("frame"); frame; frame=frame.next_sibling("frame"))
-		{
-			frameRect.x = frame.attribute("x").as_int();
-			frameRect.y = frame.attribute("y").as_int();
-			frameRect.w = frame.attribute("width").as_int();
-			frameRect.h = frame.attribute("height").as_int();
-		
-			anim_aux[animArrayNum].PushBack(frameRect);
-		}
-		++animArrayNum;
+		middlePoint_Group += (*iter)->position;
 	}
-	entitiesAnimation.add(anim_aux);
-
-	return ret;
+	middlePoint_Group /= selected_units.size();
+	return middlePoint_Group;
 }
-
-*/
-
-

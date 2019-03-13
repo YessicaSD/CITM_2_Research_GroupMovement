@@ -32,7 +32,7 @@ public:
 	SDL_Texture* Tex_Idle;
 	SDL_Texture* Tex_Selected;
 	std::vector<iPoint> Path;
-
+	
 	void Draw(float dt) override;
 	void Move(float dt) override;
 

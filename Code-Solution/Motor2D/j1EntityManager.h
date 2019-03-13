@@ -33,6 +33,9 @@ public:
 	void DestroyAllEntities();
 	j1Entity* InThisTile_IsUnits(iPoint tile);
 
+	fPoint middlePoint_Group;
+	// TODO 1: Create a funtion that calculates the middle point------------------------------------------------------------------------ -
+	fPoint Calculate_middle_Point();
 
 	//Module funtions-----------------
 	bool Awake(pugi::xml_node&)override;
@@ -41,7 +44,7 @@ public:
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
-	fPoint middlePoint_Group;
+	
 
 };
 #endif // __ModuleEnemies_H__

@@ -11,6 +11,7 @@ DynamicEntity::DynamicEntity(fPoint position, SDL_Texture * tex, entities_types 
 }
 void DynamicEntity::Draw(float dt)
 {
+	
 	if (Path.size() > 0)
 	{
 		for (std::vector<iPoint>::iterator iter = Path.begin(); iter != Path.end(); ++iter)
@@ -25,12 +26,17 @@ void DynamicEntity::Draw(float dt)
 
 	}
 
-	SDL_Rect frame = { position.x,position.y,10,10 };
-	App->render->DrawQuad(frame, 125, 0, 125, 125, true);
-	if (selected==true)
+	SDL_Color color;
+	if (selected)
 	{
-		App->render->DrawCircle(position.x, position.y, 20, 255, 255, 255, 255);
+		color = { 255, 69, 25, 255 };
 	}
+	else
+	{
+		color = { 178, 34, 0, 255 };
+	}
+	SDL_Rect frame = { position.x,position.y,10,10 };
+	App->render->DrawQuad(frame, color.r, color.g, color.b, color.a, true);
 	
 }
 
