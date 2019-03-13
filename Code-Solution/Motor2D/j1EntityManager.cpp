@@ -76,12 +76,14 @@ bool j1EntityManager::Update(float dt)
 	static iPoint Pos_Mouse_ClickRepeat;
 	static j1KeyState last_righ_click_state;
 	static SDL_Rect selection_rect;
-	//Right Click
+	//Here we get the right click position in click down ------------------------------------
 	if (App->input->GetMouseButtonState(3)== j1KeyState::KEY_DOWN)
 	{
 		App->input->GetMousePosition(Pos_Mouse_ClickDown.x, Pos_Mouse_ClickDown.y);
 		last_righ_click_state = j1KeyState::KEY_DOWN;
 	}
+
+	//Here we generete the seletion area --------------------------------------------------------------------------------------
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_REPEAT)
 	{
 		App->input->GetMousePosition(Pos_Mouse_ClickRepeat.x, Pos_Mouse_ClickRepeat.y);
@@ -92,6 +94,9 @@ bool j1EntityManager::Update(float dt)
 		App->render->DrawQuad(selection_rect, 0, 125, 175, 50, true);
 		
 	}
+
+	//When we realese the right button from the mouse we select entites that are inside the selection area-------------------------
+	
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_UP)
 	{
 		for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
@@ -105,6 +110,7 @@ bool j1EntityManager::Update(float dt)
 				selected_units.push_back(*iter);
 			}
 		}
+
 	}
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{

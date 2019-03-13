@@ -41,7 +41,7 @@ public:
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
 	bool CleanUp() override;
-
+	fPoint middlePoint_Group;
 
 };
 #endif // __ModuleEnemies_H__
