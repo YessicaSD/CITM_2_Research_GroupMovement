@@ -26,7 +26,7 @@ To reach this we'll analisy differents group movement implented in RTS games, we
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <p>If you don't see it yet heres a gif to illustrate this</p>
   
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif" alt="GifExplenation"/>
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation"/>
 <br/>
    <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
 <h2>Reference information</h2>
@@ -39,4 +39,4 @@ To reach this we'll analisy differents group movement implented in RTS games, we
  
 </ul>
 
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+
