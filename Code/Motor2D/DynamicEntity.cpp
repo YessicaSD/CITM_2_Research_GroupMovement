@@ -12,5 +12,9 @@ void DynamicEntity::Draw(float dt)
 {
 	SDL_Rect frame = { position.x,position.y,10,10 };
 	App->render->DrawQuad(frame, 125, 0, 125, 255, true);
+	if (selected==true)
+	{
+		App->render->DrawCircle(position.x, position.y, 20, 255, 255, 255, 255);
+	}
 
 }

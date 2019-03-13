@@ -84,13 +84,23 @@ bool j1EntityManager::Update(float dt)
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_REPEAT)
 	{
 		App->input->GetMousePosition(Pos_Mouse_ClickRepeat.x, Pos_Mouse_ClickRepeat.y);
-		SDL_Rect Selection_rect;
-		Selection_rect.x = (Pos_Mouse_ClickDown.x < Pos_Mouse_ClickRepeat.x) ? Pos_Mouse_ClickDown.x : Pos_Mouse_ClickRepeat.x;
-		Selection_rect.y = (Pos_Mouse_ClickDown.y < Pos_Mouse_ClickRepeat.y) ? Pos_Mouse_ClickDown.y : Pos_Mouse_ClickRepeat.y;
-		Selection_rect.w = abs(Pos_Mouse_ClickRepeat.x - Pos_Mouse_ClickDown.x);
-		Selection_rect.h = abs(Pos_Mouse_ClickRepeat.y - Pos_Mouse_ClickDown.y);
-		App->render->DrawQuad(Selection_rect, 0, 125, 175, 50, true);
-
+		SDL_Rect selection_rect;
+		selection_rect.x = (Pos_Mouse_ClickDown.x < Pos_Mouse_ClickRepeat.x) ? Pos_Mouse_ClickDown.x : Pos_Mouse_ClickRepeat.x;
+		selection_rect.y = (Pos_Mouse_ClickDown.y < Pos_Mouse_ClickRepeat.y) ? Pos_Mouse_ClickDown.y : Pos_Mouse_ClickRepeat.y;
+		selection_rect.w = abs(Pos_Mouse_ClickRepeat.x - Pos_Mouse_ClickDown.x);
+		selection_rect.h = abs(Pos_Mouse_ClickRepeat.y - Pos_Mouse_ClickDown.y);
+		App->render->DrawQuad(selection_rect, 0, 125, 175, 50, true);
+		for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+		{
+			if((*iter)->position.x>= selection_rect.x
+				&& (*iter)->position.x <= selection_rect.x+ selection_rect.w
+				&& (*iter)->position.y >= selection_rect.y 
+				&& (*iter)->position.y <= selection_rect.y + selection_rect.h)
+				{
+					(*iter)->selected = true;
+					selected_units.push_back(*iter);
+				}
+		}
 	}
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{

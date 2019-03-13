@@ -21,6 +21,7 @@ private:
 public:
 	SDL_Texture * Entities_Textures[entities_types::MAX_ENTITIES];
 	std::vector<j1Entity*> list_Entities;
+	std::vector<j1Entity*> selected_units;
 	pugi::xml_document	enemiesFile;
 	pugi::xml_node entitiesNodeDoc;
 
