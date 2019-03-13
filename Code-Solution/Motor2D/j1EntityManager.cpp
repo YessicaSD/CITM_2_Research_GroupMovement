@@ -96,9 +96,11 @@ bool j1EntityManager::Update(float dt)
 	}
 
 	//When we realese the right button from the mouse we select entites that are inside the selection area-------------------------
-	
+	//TODO 1: Here we are going to calculate the middle point-------------------------------------------------------------------------
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_UP)
 	{
+		selected_units.clear();
+		middlePoint_Group.SetToZero();
 		for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
 			if ((*iter)->position.x >= selection_rect.x
@@ -108,9 +110,11 @@ bool j1EntityManager::Update(float dt)
 			{
 				(*iter)->selected = true;
 				selected_units.push_back(*iter);
+				middlePoint_Group += (*iter)->position;
 			}
-		}
 
+		}
+		middlePoint_Group /= selected_units.size();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
@@ -158,6 +162,10 @@ bool j1EntityManager::PostUpdate(float dt)
 			(*iter)->Draw(dt);
 		}
 	
+	if (selected_units.size() > 0)
+	{
+		App->render->DrawCircle(middlePoint_Group.x, middlePoint_Group.y, 2, 255, 100, 100, 255);
+	}
 	return true;
 }
 
