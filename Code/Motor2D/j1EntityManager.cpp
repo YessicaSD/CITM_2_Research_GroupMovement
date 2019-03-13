@@ -128,6 +128,7 @@ bool j1EntityManager::Update(float dt)
 				DynamicEntity* selectedUnit = (DynamicEntity*)(*iter);
 				selectedUnit->Path.clear();
 				selectedUnit->Path=*App->pathfinding->GetLastPath();
+				selectedUnit->Path.erase(selectedUnit->Path.begin());
 			}
 
 		}

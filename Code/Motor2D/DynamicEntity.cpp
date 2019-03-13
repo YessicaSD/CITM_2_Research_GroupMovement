@@ -20,7 +20,7 @@ void DynamicEntity::Draw(float dt)
 			tile.x = pos.x;
 			tile.y = pos.y;
 
-			App->render->DrawQuad(tile, 100, 100, 0, 200);
+			App->render->DrawQuad(tile, 50, 100, 0, 200);
 		}
 
 	}
@@ -36,5 +36,27 @@ void DynamicEntity::Draw(float dt)
 
 void DynamicEntity::Move(float dt)
 {
-	
+	if (Path.size() > 0)
+	{
+		
+		iPoint tile_next_pos = *Path.begin();
+		iPoint world_next_pos = App->map->MapToWorld(tile_next_pos.x, tile_next_pos.y);
+		fPoint aux = { (float)world_next_pos.x,(float)world_next_pos.y};
+
+
+		speed = aux - position;
+		//speed /= sqrt((pow(speed.x, 2) + pow(speed.y, 2)));
+
+		iPoint int_pos = { (int)position.x,(int)position.y };
+		if (world_next_pos == int_pos)
+		{
+			Path.erase(Path.begin());
+		}
+
+	}
+
+	iPoint aux = { (int)(speed.x*dt*50),(int)(speed.y*dt*50) };
+	position.x += (float)aux.x;
+	position.y += (float)aux.y;
+
 }
