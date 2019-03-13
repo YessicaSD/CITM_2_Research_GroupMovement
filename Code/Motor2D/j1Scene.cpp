@@ -89,7 +89,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_1))
 	{
 		MousePos = App->map->WorldToMap(MousePos.x, MousePos.y);
-		if (App->pathfinding->IsWalkable(MousePos)==true)
+		if (App->pathfinding->IsWalkable(MousePos)==true && App->entities->InThisTile_IsUnits(MousePos)==false)
 		{
 			iPoint WorldPos_Tile = App->map->MapToWorld(MousePos.x, MousePos.y);
 			entityPos = { (float)WorldPos_Tile.x, (float)WorldPos_Tile.y };
@@ -152,8 +152,7 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	
 
 	return ret;
 }

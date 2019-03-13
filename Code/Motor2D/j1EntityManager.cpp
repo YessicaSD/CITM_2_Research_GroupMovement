@@ -75,6 +75,7 @@ bool j1EntityManager::Update(float dt)
 	static iPoint Pos_Mouse_ClickDown;
 	static iPoint Pos_Mouse_ClickRepeat;
 	static j1KeyState last_righ_click_state;
+	static SDL_Rect selection_rect;
 	//Right Click
 	if (App->input->GetMouseButtonState(3)== j1KeyState::KEY_DOWN)
 	{
@@ -84,29 +85,61 @@ bool j1EntityManager::Update(float dt)
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_REPEAT)
 	{
 		App->input->GetMousePosition(Pos_Mouse_ClickRepeat.x, Pos_Mouse_ClickRepeat.y);
-		SDL_Rect selection_rect;
 		selection_rect.x = (Pos_Mouse_ClickDown.x < Pos_Mouse_ClickRepeat.x) ? Pos_Mouse_ClickDown.x : Pos_Mouse_ClickRepeat.x;
 		selection_rect.y = (Pos_Mouse_ClickDown.y < Pos_Mouse_ClickRepeat.y) ? Pos_Mouse_ClickDown.y : Pos_Mouse_ClickRepeat.y;
 		selection_rect.w = abs(Pos_Mouse_ClickRepeat.x - Pos_Mouse_ClickDown.x);
 		selection_rect.h = abs(Pos_Mouse_ClickRepeat.y - Pos_Mouse_ClickDown.y);
 		App->render->DrawQuad(selection_rect, 0, 125, 175, 50, true);
+		
+	}
+	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_UP)
+	{
 		for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
-			if((*iter)->position.x>= selection_rect.x
-				&& (*iter)->position.x <= selection_rect.x+ selection_rect.w
-				&& (*iter)->position.y >= selection_rect.y 
+			if ((*iter)->position.x >= selection_rect.x
+				&& (*iter)->position.x <= selection_rect.x + selection_rect.w
+				&& (*iter)->position.y >= selection_rect.y
 				&& (*iter)->position.y <= selection_rect.y + selection_rect.h)
-				{
-					(*iter)->selected = true;
-					selected_units.push_back(*iter);
-				}
+			{
+				(*iter)->selected = true;
+				selected_units.push_back(*iter);
+			}
 		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
+		{
+			(*iter)->selected = false;
+		}
+		selected_units.clear();
+	}
+
+	iPoint destination  = App->input->GetMousePos_Tiles();
+	if (App->input->GetMouseButtonState(1) == j1KeyState::KEY_DOWN && App->pathfinding->IsWalkable(destination))
+	{
+		iPoint origin;
+		
+		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
+		{
+			origin=App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
+			if (App->pathfinding->CreatePath(origin, destination) != -1)
+			{
+				DynamicEntity* selectedUnit = (DynamicEntity*)(*iter);
+				selectedUnit->Path.clear();
+				selectedUnit->Path=*App->pathfinding->GetLastPath();
+			}
+
+		}
+		
 	}
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
 		(*iter)->Move(dt);
 	}
 	
+	
+		
 	return true;
 }
 
@@ -117,7 +150,7 @@ bool j1EntityManager::PostUpdate(float dt)
 		{
 			(*iter)->Draw(dt);
 		}
-
+	
 	return true;
 }
 
@@ -174,6 +207,17 @@ void j1EntityManager::DestroyAllEntities()
 
 	}
 	list_Entities.clear();
+}
+
+bool j1EntityManager::InThisTile_IsUnits(iPoint tile)
+{
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+	{
+		iPoint TilePos = App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
+		if (TilePos == tile)
+		return true;
+	}
+	return false;
 }
 
 /*

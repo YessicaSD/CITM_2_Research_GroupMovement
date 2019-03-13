@@ -3,6 +3,8 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1Render.h"
+#include "j1Map.h"
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
@@ -155,4 +157,13 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+iPoint j1Input::GetMousePos_Tiles()
+{
+	iPoint ret;
+	ret = App->render->ScreenToWorld(mouse_x, mouse_y);
+	ret = App->map->WorldToMap(ret.x, ret.y);
+
+	return ret;
 }

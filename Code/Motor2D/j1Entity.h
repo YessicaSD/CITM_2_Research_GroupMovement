@@ -29,6 +29,7 @@ public:
 	Collider* collider = nullptr;
 	entities_types type;
 	bool death = false, selected = false;
+
 public:
 	j1Entity(fPoint position, SDL_Texture * tex, entities_types type);
 	virtual ~j1Entity();

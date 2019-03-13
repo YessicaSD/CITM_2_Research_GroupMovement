@@ -2,6 +2,7 @@
 #define __DYNAMIC_ENTITY_H_
 #include "j1Entity.h"
 #include "Animation.h"
+#include <vector>
 enum Unit_Direction
 {
 	UnitDirection_Up,
@@ -30,8 +31,11 @@ public:
 	fPoint speed = { 0.0F,0.0F };
 	SDL_Texture* Tex_Idle;
 	SDL_Texture* Tex_Selected;
+	std::vector<iPoint> Path;
+
 	void Draw(float dt) override;
-	bool selected= false;
+	void Move(float dt) override;
+
 };
 
 #endif // __DYNAMIC_ENTITY_H_
