@@ -27,7 +27,7 @@ To reach this we'll analisy differents group movement implented in RTS games, we
   <p>If you don't see it yet heres a gif to illustrate this</p>
   
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif" alt="GifExplenation"/>
-
+<br/>
    <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
@@ -38,3 +38,5 @@ To reach this we'll analisy differents group movement implented in RTS games, we
  <li> <a href="https://www.gamasutra.com/view/feature/3313/coordinated_unit_movement.php?print=1">https://www.gamasutra.com/view/feature/3313/coordinated_unit_movement.php?print=1</a></li> 
  
 </ul>
+
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
