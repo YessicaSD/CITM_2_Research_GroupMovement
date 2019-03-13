@@ -31,7 +31,7 @@ public:
 	j1Entity* AddEntity(entities_types type,fPoint pos);
 	bool DestroyEntity(std::vector<j1Entity*>::iterator entity);
 	void DestroyAllEntities();
-	bool InThisTile_IsUnits(iPoint tile);
+	j1Entity* InThisTile_IsUnits(iPoint tile);
 
 
 	//Module funtions-----------------

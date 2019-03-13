@@ -210,15 +210,16 @@ void j1EntityManager::DestroyAllEntities()
 	list_Entities.clear();
 }
 
-bool j1EntityManager::InThisTile_IsUnits(iPoint tile)
+j1Entity* j1EntityManager::InThisTile_IsUnits(iPoint tile)
 {
+	j1Entity* ret = nullptr;
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
 		iPoint TilePos = App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
 		if (TilePos == tile)
-		return true;
+		return ret=*iter;
 	}
-	return false;
+	return ret;
 }
 
 /*

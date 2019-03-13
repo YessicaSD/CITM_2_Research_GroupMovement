@@ -45,8 +45,6 @@ void DynamicEntity::Move(float dt)
 
 
 		speed = aux - position;
-		//speed /= sqrt((pow(speed.x, 2) + pow(speed.y, 2)));
-
 		iPoint int_pos = { (int)position.x,(int)position.y };
 		if (world_next_pos == int_pos)
 		{
