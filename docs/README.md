@@ -4,7 +4,8 @@ This content is generated for the second year’s subject Project 2, under super
 
 <h1>Introduction</h1>
 <p>The objetive of this research is to implement group pathfinding. To reach this we'll analisy differents group movement implented in RTS games, we'll get the best caracteristics of each one or most of them and create the best implementation posible.</p>
-<i>Although this implamenteation is based on diferents RTS games it could also be applaid in differens kind of games.</i>
+<i>Disclaimer: Although this implamenteation is based on diferents RTS games it could also be applaid in differens kind of games. 
+ AND please check out reference links I used to develop this project you could find more information</i>
 
 <h1>Command & Conquer:Red Alert 2</h1>
 <p>
@@ -23,8 +24,10 @@ This content is generated for the second year’s subject Project 2, under super
  <p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <p>If you don't see it yet heres a gif to illustrate this</p>
+  
    <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif" alt="GifExplenation">
-   <i>THe blue point is the middle point and the red one is the destination, and squares are entities</i>
+   
+   <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
   <li> <a href="https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php" >https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</a></li>
