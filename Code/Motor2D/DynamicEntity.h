@@ -28,8 +28,10 @@ public:
 	Unit_State state = IDLE;
 	Unit_Direction diretion;
 	fPoint speed = { 0.0F,0.0F };
-	Animation* Anim;
+	SDL_Texture* Tex_Idle;
+	SDL_Texture* Tex_Selected;
 	void Draw(float dt) override;
+	bool selected= false;
 };
 
 #endif // __DYNAMIC_ENTITY_H_

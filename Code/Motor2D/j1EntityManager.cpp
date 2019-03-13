@@ -72,6 +72,26 @@ bool j1EntityManager::PreUpdate(float dt)
 
 bool j1EntityManager::Update(float dt)
 {
+	static iPoint Pos_Mouse_ClickDown;
+	static iPoint Pos_Mouse_ClickRepeat;
+	static j1KeyState last_righ_click_state;
+	//Right Click
+	if (App->input->GetMouseButtonState(3)== j1KeyState::KEY_DOWN)
+	{
+		App->input->GetMousePosition(Pos_Mouse_ClickDown.x, Pos_Mouse_ClickDown.y);
+		last_righ_click_state = j1KeyState::KEY_DOWN;
+	}
+	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_REPEAT)
+	{
+		App->input->GetMousePosition(Pos_Mouse_ClickRepeat.x, Pos_Mouse_ClickRepeat.y);
+		SDL_Rect Selection_rect;
+		Selection_rect.x = (Pos_Mouse_ClickDown.x < Pos_Mouse_ClickRepeat.x) ? Pos_Mouse_ClickDown.x : Pos_Mouse_ClickRepeat.x;
+		Selection_rect.y = (Pos_Mouse_ClickDown.y < Pos_Mouse_ClickRepeat.y) ? Pos_Mouse_ClickDown.y : Pos_Mouse_ClickRepeat.y;
+		Selection_rect.w = abs(Pos_Mouse_ClickRepeat.x - Pos_Mouse_ClickDown.x);
+		Selection_rect.h = abs(Pos_Mouse_ClickRepeat.y - Pos_Mouse_ClickDown.y);
+		App->render->DrawQuad(Selection_rect, 0, 125, 175, 50, true);
+
+	}
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
 		(*iter)->Move(dt);
@@ -87,6 +107,7 @@ bool j1EntityManager::PostUpdate(float dt)
 		{
 			(*iter)->Draw(dt);
 		}
+
 	return true;
 }
 
@@ -111,7 +132,6 @@ j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)
 	{
 		newEntity = new DynamicEntity(pos, Entities_Textures[type], type);
 		DynamicEntity* DynPointer = (DynamicEntity*)newEntity;
-		DynPointer->Anim = &Allied_Info.AnimInfo;
 	}
 		
 	break;

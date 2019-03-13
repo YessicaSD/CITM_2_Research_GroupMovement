@@ -33,7 +33,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(App->map->Load("iso_walk.tmx") == true)
+	if(App->map->Load("Map_Ortogonal.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -81,12 +81,20 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	iPoint aux;
-	App->input->GetMousePosition(aux.x, aux.y);
-	fPoint MousePos = { (float)aux.x,(float)aux.y };
+	iPoint MousePos;
+	App->input->GetMousePosition(MousePos.x, MousePos.y);
+	MousePos=App->render->ScreenToWorld(MousePos.x,MousePos.y);
+
+	fPoint entityPos;
 	if (App->input->GetKey(SDL_SCANCODE_1))
 	{
-		App->entities->AddEntity(entities_types::ALLIED_INFANT, MousePos);
+		MousePos = App->map->WorldToMap(MousePos.x, MousePos.y);
+		if (App->pathfinding->IsWalkable(MousePos)==true)
+		{
+			iPoint WorldPos_Tile = App->map->MapToWorld(MousePos.x, MousePos.y);
+			entityPos = { (float)WorldPos_Tile.x, (float)WorldPos_Tile.y };
+			App->entities->AddEntity(entities_types::ALLIED_INFANT, entityPos);
+		}
 	}
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");

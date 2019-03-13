@@ -31,9 +31,9 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-
-private:
 	SDL_Texture* debug_tex;
+private:
+	
 };
 
 #endif // __j1SCENE_H__
