@@ -64,23 +64,9 @@ bool j1EntityManager::PreUpdate(float dt)
 		}
 		else
 		{
+
 			(*iter)->PreUpdate(dt);
-			/*if (u->state == IncrementWaypoint)
-			{
-				for (std::vector<j1Entity*>::iterator iter_2 = iter + 1; iter_2 != list_Entities.end(); ++iter_2)
-				{
-					Unit* u2 = (Unit*)(*iter_2);
-					if (u->next_Goal == (*u2).next_Goal )
-					{
-						u2->state = waiting;
-					}
-					else if (u->next_Goal == u->TilePos)
-					{
-						u->state = waiting;
-						u->waitTime.Start();
-					}
-				}
-			}*/
+		
 			
 		}
 	}
@@ -199,6 +185,10 @@ bool j1EntityManager::Update(float dt)
 
 bool j1EntityManager::PostUpdate(float dt)
 {
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+	{
+		(*iter)->DebugDraw();
+	}
 	
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
@@ -221,6 +211,35 @@ bool j1EntityManager::CleanUp()
 
 	return true;
 }
+
+void j1EntityManager::PredictPossibleCollitions()
+{
+	//TODO 3 predict collitons ------------------------------------------------------------------------------------------------
+	Unit* u;
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+	{
+		u = (Unit*)*iter;
+		if (u->state == IncrementWaypoint)
+		{
+			for (std::vector<j1Entity*>::iterator jiter = list_Entities.begin(); jiter != list_Entities.end(); ++jiter)
+			{
+				Unit* otherU = (Unit*)*jiter;
+				if (*iter != *jiter)
+				{
+					//if the position where other entitie is, is the entities next tile objetive
+					if (otherU->TilePos == u->next_Goal)
+					{
+						if (otherU->state == idle)
+						{
+							
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 
 
 j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)

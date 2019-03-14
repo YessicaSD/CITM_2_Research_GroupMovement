@@ -49,6 +49,9 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClCompile>
+    <ClCompile Include="ColliderFuntions.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Unit.h">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
+    </ClInclude>
+    <ClInclude Include="CollidersFuntions.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

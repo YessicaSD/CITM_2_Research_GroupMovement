@@ -9,25 +9,13 @@
 //#include "SDL\include\SDL_rect.h
 Unit::Unit(fPoint position, SDL_Texture * tex, entities_types type):j1Entity(position,tex,type)
 {
-	//singleUnit = new SingleUnit(this,nullptr);
-	//App->movement.
+	posCollider.radio = 3;
+	posCollider.center = position;
 }
 void Unit::Draw(float dt)
 {
 	
-	if (Path.size() > 0)
-	{
-		for (std::vector<iPoint>::iterator iter = Path.begin(); iter != Path.end(); ++iter)
-		{
-			SDL_Rect tile = { 0,0,10,10 };
-			iPoint pos = App->map->MapToWorld((*iter).x, (*iter).y);
-			tile.x = pos.x;
-			tile.y = pos.y;
 
-			App->render->DrawQuad(tile, 50, 100, 0, 200);
-		}
-
-	}
 
 	SDL_Color color;
 	if (selected)
@@ -45,28 +33,33 @@ void Unit::Draw(float dt)
 
 void Unit::Move(float dt)
 {
-	//// Save mouse position (world and map coords)
-	//int x, y;
-	//App->input->GetMousePosition(x, y);
-	//iPoint mousePos = App->render->ScreenToWorld(x, y);
-	//iPoint mouseTile = App->map->WorldToMap(mousePos.x, mousePos.y);
-	//iPoint mouseTilePos = App->map->MapToWorld(mouseTile.x, mouseTile.y);
-
-	// ---------------------------------------------------------------------
-
-
-
 	UnitStateMachine(dt);
+}
 
+void Unit::DebugDraw()
+{
+	if (Path.size() > 0)
+	{
+		for (std::vector<iPoint>::iterator iter = Path.begin(); iter != Path.end(); ++iter)
+		{
+			SDL_Rect tile = { 0,0,10,10 };
+			iPoint pos = App->map->MapToWorld((*iter).x, (*iter).y);
+			tile.x = pos.x;
+			tile.y = pos.y;
 
-	
+			App->render->DrawQuad(tile, 50, 100, 0, 200);
+		}
 
+	}
 }
 
 void Unit::OnCollision(Collider * c1, Collider * c2)
 {
 }
-
+bool Unit::MoveOfTheWayOf(Unit* u)
+{
+	return true;
+}
 void Unit::UnitStateMachine(float dt)
 {
 	switch (state)
@@ -89,6 +82,7 @@ void Unit::UnitStateMachine(float dt)
 			Path.erase(Path.begin());
 			next_Goal = *Path.begin();
 			state = IncrementWaypoint;
+			
 		}
 	}
 
@@ -103,24 +97,28 @@ void Unit::UnitStateMachine(float dt)
 		if (Path.size() > 0)
 		{
 
-			iPoint tile_next_pos = *Path.begin();
-			iPoint world_next_pos = App->map->MapToWorld(tile_next_pos.x , tile_next_pos.y );
+			
+			iPoint world_next_pos = App->map->MapToWorld(next_Goal.x , next_Goal.y );
 			fPoint aux = { (float)world_next_pos.x + App->map->data.tile_width*0.5F,(float)world_next_pos.y + App->map->data.tile_height*0.5F };
 
 
 			speed = aux - position;
 			iPoint int_pos = { (int)position.x,(int)position.y };
-			if (aux == int_pos.Return_fPoint())
+			//Check if we are on the center of the tile
+			if (posCollider.IsPointIn(aux))
 			{
 				Path.erase(Path.begin());
-				TilePos = tile_next_pos;
+				next_Goal = *Path.begin();
+				TilePos = next_Goal;
+
 			}
 
 		}
 
-		iPoint aux = { (int)(speed.x/**dt * 50*/),(int)(speed.y/**dt * 50*/) };
+		iPoint aux = { (int)(speed.x*dt*20 ),(int)(speed.y*dt*20) };
 		position.x += (float)aux.x;
 		position.y += (float)aux.y;
+		posCollider.center = position;
 	}
 	break;
 	case max_state:

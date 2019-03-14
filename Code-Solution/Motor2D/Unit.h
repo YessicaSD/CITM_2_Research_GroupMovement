@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "j1Movement.h"
 #include "j1Timer.h"
+#include "CollidersFuntions.h"
 #include <vector>
 
 struct SDL_Color;
@@ -32,6 +33,15 @@ enum Unit_State
 	IncrementWaypoint,
 	max_state
 };
+
+enum CollisionType {
+	CollisionType_NoCollision,
+	CollisionType_SameCell,
+	CollisionType_TowardsCell,
+	CollisionType_ItsCell,
+	CollisionType_DiagonalCrossing
+};
+
 class Unit: public j1Entity
 {
 private:
@@ -42,8 +52,13 @@ private:
 	fPoint speed;
 	fPoint direction;
 	std::vector<iPoint> Path;
+	
+
 public:
+	Circle posCollider;
 	Unit_State state = idle;
+	CollisionType ColliderState = CollisionType_NoCollision;
+	Unit* waitingUnit = nullptr;
 	Unit(fPoint position, SDL_Texture * tex, entities_types type);
 	~Unit()
 	{
@@ -53,6 +68,7 @@ public:
 	
 	void Draw(float dt) override;
 	void Move(float dt) override;
+	void DebugDraw() override;
 	iPoint goal;
 	iPoint next_Goal;
 	j1Timer waitTime;
@@ -64,6 +80,7 @@ public:
 	fPoint GetUnitDirectionByValue() const;
 
 	SingleUnit* GetSingleUnit() const;
+	bool Unit::MoveOfTheWayOf(Unit* u);
 };
 
 #endif // __DYNAMIC_ENTITY_H_
