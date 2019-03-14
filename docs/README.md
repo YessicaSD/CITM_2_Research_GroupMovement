@@ -56,8 +56,9 @@ This is something that games like Command & Conquer: Red Alert 2 and The Maestro
  <p>The problem with this is that as they started so far away of the group they end up separated, instiead to join the group. To solve this problem we are going to limitate the obset of the entities to the goal.
 In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
  <br>
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true"/> 
- <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true"/> 
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true" width="400"/> 
+ <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true" width="400"/> 
+ <br>
  <i>before and after</i>
  <br>
 <p>
