@@ -8,6 +8,12 @@ To reach this we'll analisy differents group movement implented in RTS games, we
 This fiature it's something that you can do in many ways, it depens in your game caracteristics.</p>
 <i>Disclaimer: Although this implamenteation is based on diferents RTS games it could also be applaid in differens kind of games. 
  AND please check out reference links I used to develop this project you could find more information</i>
+ 
+ 
+ <Pathfinding>
+ To implement a group movement the first step is to be able to move one unit, this one needs to find the bes way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html" >A* algorithm</a>, it's generaly used in most of the games couse it takes lowe comupation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
+ If you are a beginer and your game dosn't need that many units, so you can also see Breadth First Search algorithm or Dijkstra’s Algorithm. This methos are more easy to understand and also to implement and a good point to start. 
+ 
 
 <h1>Command & Conquer:Red Alert 2</h1>
 <p>
