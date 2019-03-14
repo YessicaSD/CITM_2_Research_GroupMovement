@@ -154,28 +154,59 @@ bool j1EntityManager::Update(float dt)
 	{
 		Calculate_middle_Point();
 		iPoint fl_mousePos_px = App->render->ScreenToWorld(mouse_pos.x, mouse_pos.y);
-		iPoint destination;
-		iPoint Pixels_Destination = fl_mousePos_px;
+		iPoint Destination_Tile = App->map->WorldToMap(fl_mousePos_px.x, fl_mousePos_px.y);
 		//Center it 
-		Pixels_Destination += {(int)(App->map->data.tile_width*0.5), (int)(App->map->data.tile_height*0.5)};
+		
 		iPoint origin;
-
+		Unit* Leader = nullptr;
+		bool createdLeader=false;
+		//Calculete max objeset Ratius
+		int max_offset_goal=(int)(selected_units.size()*0.5F);
+		//max_offset_goal += 5;
 		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
 		{
+			iPoint Tile_goal;
 			origin = App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
 			iPoint distance_middlePoint = (*iter)->position.ReturniPoint() - middlePoint_Group.ReturniPoint();
 			iPoint Pixels_goal = (distance_middlePoint + fl_mousePos_px).ReturniPoint();
-			destination = App->map->WorldToMap((int)Pixels_goal.x, (int)Pixels_goal.y);
-
-			if (App->pathfinding->IsWalkable(destination))
+			Tile_goal = App->map->WorldToMap((int)Pixels_goal.x, (int)Pixels_goal.y);
+			if (Tile_goal.x >= Destination_Tile.x - max_offset_goal
+				&& Tile_goal.x <= Destination_Tile.x + max_offset_goal
+				&& Tile_goal.y >= Destination_Tile.y - max_offset_goal
+				&& Tile_goal.y <= Destination_Tile.y + max_offset_goal)
 			{
-				Unit* selectedUnit = (Unit*)(*iter);
-				selectedUnit->goal = destination;
-				selectedUnit->state = getPath;
-
+				if (App->pathfinding->IsWalkable(Tile_goal))
+				{
+					Unit* selectedUnit = (Unit*)(*iter);
+					selectedUnit->goal = Tile_goal;
+					selectedUnit->state = getPath;
+					/*if (createdLeader == false)
+					{
+						Leader = selectedUnit;
+						createdLeader = true;
+					}*/
+				}
 			}
 		}
-
+	/*	for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
+		{
+			Unit* selectedUnit = (Unit*)(*iter);
+			if (Leader != nullptr)
+			{
+				if (selectedUnit->state != getPath)
+				{
+					selectedUnit->goal = Leader->goal;
+					selectedUnit->state = getPath;
+				}
+			}
+			else
+			{
+				selectedUnit->goal = Destination_Tile;
+				selectedUnit->state = getPath; 
+				Leader = selectedUnit;
+			}
+			
+		}*/
 	}
 	
 	

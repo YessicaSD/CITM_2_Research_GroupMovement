@@ -32,7 +32,7 @@ void Unit::Draw(float dt)
 
 void Unit::Move(float dt)
 {
-	TilePos = App->map->WorldToMap((int)position.x, (int)position.y);
+	//TilePos = App->map->WorldToMap((int)position.x, (int)position.y);
 	UnitStateMachine(dt);
 }
 
@@ -159,6 +159,10 @@ void Unit::UnitStateMachine(float dt)
 			Path.erase(Path.begin());
 			
 		}
+		else
+		{
+			state = idle;
+		}
 	}
 
 	break;
@@ -182,7 +186,10 @@ void Unit::UnitStateMachine(float dt)
 			}
 
 		}
-
+		else
+		{
+			state = idle;
+		}
 		iPoint aux = { (int)(speed.x/**dt * 10*/),(int)(speed.y/**dt * 10*/) };
 		position.x += (float)aux.x;
 		position.y += (float)aux.y;
