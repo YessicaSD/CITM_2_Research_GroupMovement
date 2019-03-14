@@ -23,6 +23,7 @@ To reach this we'll analisy differents group movement implented in RTS games, we
 <p>
  One thing to point out on this game is that the solution they gave to not have multiple units trying to reach the same destinetion is to mantein the locations they have between each other. To do this easist way is to find the middle center between entities and translate this point to the destination and place entities respect this one, respecting the original distance.
  The problem with this is that sometimes some units don't get a path, case the it's goal was invalid.
+ In this game you could see that on the feets of every entity selected there is a circle this is used as the area that a entity ocuped and it is considered to determinate the position of the enitites. So when a entity is going to a tile to know that this one has reached it we watch if that point was inside this area.
  <p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <p>If you don't see it yet heres a gif to illustrate this</p>
