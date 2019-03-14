@@ -23,8 +23,6 @@ This fiature it's something that you can do in many ways, it depens in your game
 <h1>The Maestros</h1>
 <p>
  One thing to point out on this game is that the solution they gave to not have multiple units trying to reach the same destinetion is to mantein the locations they have between each other. To do this easist way is to find the middle center between entities and translate this point to the destination and place entities respect this one, respecting the original distance.
- The problem with this is that sometimes some units don't get a path, case the it's goal was invalid.
- In this game you could see that on the feets of every entity selected there is a circle this is used as the area that a entity ocuped and it is considered to determinate the position of the enitites. So when a entity is going to a tile to know that this one has reached it we watch if that point was inside this area.
  <p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <p>If you don't see it yet heres a gif to illustrate this</p>
@@ -34,7 +32,13 @@ This fiature it's something that you can do in many ways, it depens in your game
    <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
    
    <p>Also this works really well when the group of unit is small and at the start of the movement they are near echa other, also it's a really simple implemantation<p>
-   
+ 
+ <p>The problem with this is that as they they started so far away of the group they end up separated, instiead to join the group. To solve this problem we are going to limitate the obset of the entities to the goal.
+In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
+ <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true"/> 
+<p>
+   In this game you could see that on the feets of every entity selected there is a circle this is used as the area that a entity ocuped and it is considered to determinate the position of the enitites. So when a entity is going to a tile to know that this one has reached it we watch if that point was inside this area.
+ 
    <h1>Collition system</h1>
    For preventing entities to collide to each other, we are going to not let them collide in the first place. 
    To do this before they stat moving we are going to consider all units, their state and their move. We are going to identify witch kind of collition the unity is going to have so we can prevent it.
