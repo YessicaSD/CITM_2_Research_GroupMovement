@@ -34,6 +34,18 @@ To reach this we'll analisy differents group movement implented in RTS games, we
    
    <p>Also this works really well when the group of unit is small and start of the movement they are near echa other but it's a really simple implemantation<p>
    
+   <h1>Collition system</h1>
+   For preventing entities to collide to each other, we are going to not let them collide in the first place. 
+   To do this before they stat moving we are going to consider all units, their state and their move.
+   enum Unit_State
+{
+	idle, 
+	waiting, //Wait to another unit to move
+	getPath, // Create entities path
+	ReachedGoal, 
+	IncrementWaypoint, // Move
+	max_state
+};
    
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
