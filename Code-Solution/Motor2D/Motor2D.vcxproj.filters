@@ -46,7 +46,7 @@
     <ClCompile Include="j1EntityManager.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="DynamicEntity.cpp">
+    <ClCompile Include="Unit.cpp">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,7 +111,7 @@
     <ClInclude Include="j1EntityManager.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicEntity.h">
+    <ClInclude Include="Unit.h">
       <Filter>Desenvolupament  ========\Modules\Enitites</Filter>
     </ClInclude>
   </ItemGroup>

@@ -57,6 +57,7 @@ bool j1EntityManager::PreUpdate(float dt)
 	uint vec_size = list_Entities.size();
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter!= list_Entities.end(); ++iter)
 	{
+		Unit* u = (Unit*)(*iter);
 		if ((*iter)->toDelete == true)
 		{
 			list_Entities.erase(iter);
@@ -64,6 +65,23 @@ bool j1EntityManager::PreUpdate(float dt)
 		else
 		{
 			(*iter)->PreUpdate(dt);
+			/*if (u->state == IncrementWaypoint)
+			{
+				for (std::vector<j1Entity*>::iterator iter_2 = iter + 1; iter_2 != list_Entities.end(); ++iter_2)
+				{
+					Unit* u2 = (Unit*)(*iter_2);
+					if (u->next_Goal == (*u2).next_Goal )
+					{
+						u2->state = waiting;
+					}
+					else if (u->next_Goal == u->TilePos)
+					{
+						u->state = waiting;
+						u->waitTime.Start();
+					}
+				}
+			}*/
+			
 		}
 	}
 
@@ -72,6 +90,11 @@ bool j1EntityManager::PreUpdate(float dt)
 
 bool j1EntityManager::Update(float dt)
 {
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+	{
+		(*iter)->Move(dt);
+	}
+
 	//Get mouse pos
 	iPoint mouse_pos;
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
@@ -118,6 +141,7 @@ bool j1EntityManager::Update(float dt)
 				&& (*iter)->position.y <= selection_rect.y + selection_rect.h)
 			{
 				(*iter)->selected = true;
+				Unit* aux = (Unit*)(*iter);
 				selected_units.push_back(*iter);
 				
 			}
@@ -157,20 +181,15 @@ bool j1EntityManager::Update(float dt)
 			iPoint Pixels_goal = (distance_middlePoint + fl_mousePos_px).ReturniPoint();
 			destination = App->map->WorldToMap((int)Pixels_goal.x, (int)Pixels_goal.y);
 
-			if (App->pathfinding->CreatePath(origin, destination) != -1)
+			if (App->pathfinding->IsWalkable(destination))
 			{
-				DynamicEntity* selectedUnit = (DynamicEntity*)(*iter);
-				selectedUnit->Path.clear();
-				selectedUnit->Path=*App->pathfinding->GetLastPath();
-				selectedUnit->Path.erase(selectedUnit->Path.begin());
+				Unit* selectedUnit = (Unit*)(*iter);
+				selectedUnit->goal = destination;
+				selectedUnit->state = getPath;
+				
 			}
-
 		}
 		
-	}
-	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
-	{
-		(*iter)->Move(dt);
 	}
 	
 	
@@ -212,8 +231,10 @@ j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)
 	{
 	case ALLIED_INFANT:
 	{
-		newEntity = new DynamicEntity(pos, Entities_Textures[type], type);
-		DynamicEntity* DynPointer = (DynamicEntity*)newEntity;
+		newEntity = new Unit(pos, Entities_Textures[type], type);
+		Unit* DynPointer = (Unit*)newEntity;
+		DynPointer->TilePos = App->map->WorldToMap((int)pos.x, (int)pos.y);
+		DynPointer->goal = DynPointer->TilePos;
 	}
 		
 	break;

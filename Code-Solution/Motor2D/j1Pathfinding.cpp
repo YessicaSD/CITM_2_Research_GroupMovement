@@ -237,7 +237,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	if (!IsWalkable(origin) || !IsWalkable(destination))
+	if ( origin== destination || !IsWalkable(origin) || !IsWalkable(destination) )
 		return -1;
 
 	PathList openList, closeList;

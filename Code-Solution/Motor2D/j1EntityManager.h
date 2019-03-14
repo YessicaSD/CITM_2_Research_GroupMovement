@@ -7,7 +7,7 @@
 #include "p2Defs.h"
 #include "Animation.h"
 #include "j1Entity.h"
-#include "DynamicEntity.h"
+#include "Unit.h"
 #include <vector> 
 struct Allied_Infa_Info
 {

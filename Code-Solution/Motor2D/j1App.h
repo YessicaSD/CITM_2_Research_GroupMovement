@@ -18,6 +18,7 @@ class j1Scene;
 class j1Map;
 class j1PathFinding;
 class j1EntityManager;
+class j1Movement;
 
 class j1App
 {
@@ -90,7 +91,7 @@ public:
 	j1Map*				map = NULL;
 	j1PathFinding*		pathfinding = NULL;
 	j1EntityManager*	entities = NULL;
-
+	j1Movement*			movement = NULL;
 private:
 
 	std::list<j1Module*>	modules;
