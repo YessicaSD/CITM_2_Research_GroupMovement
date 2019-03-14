@@ -10,36 +10,50 @@ This fiature it's something that you can do in many ways, it depens in your game
  AND please check out reference links I used to develop this project you could find more information</i>
  
  
- <Pathfinding>
+ <h1>Pathfinding</h1>
  To implement a group movement the first step is to be able to move one unit, this one needs to find the bes way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html" >A* algorithm</a>, it's generaly used in most of the games couse it takes lowe comupation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
  If you are a beginer and your game dosn't need that many units, so you can also see Breadth First Search algorithm or Dijkstra’s Algorithm. This methos are more easy to understand and also to implement and a good point to start. 
  
+ <h1>Goal Tile</h1>
+<p>If we try units to move to the same tile they would get overlapping, or if we got collition sistem only one unit would get there and the other was will still try to move<p>
+  <img src="https://media.indiedb.com/images/articles/1/254/253140/auto/8mfFxGS.gif"/>
+ 
+ To solve this one idea is to transfer the state of "found goal" through units, so if a unit tries to get in a tile were there is one already but both of them got the same the destination and one found it the other one will too, and stop moving.
+  <img src="https://i.imgur.com/9zImMiX.gif"/>
+ 
+ This implementation is called "transitive bumping" and it's a good idea but cause some problems like:
+ 
+ - Units placed in line instead of a group
+ <img src=" https://i.imgur.com/9zImMiX.gif"/>
 
+So what we are going to do is determine an offset to the goal so every entity got it own goal. This offset is calculated with the start position of every unit. We find the middle center between entities and translate this point to the destination and place entities respecting the original distance between this one and the middle point.
+
+ <p>If you don't see it yet heres a gif to illustrate this</p>
+  
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation" width="560" align="center"/>
+<br/>
+   <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
+   
+This is something that games like Command & Conquer: Red Alert 2 and The Maestros seems to be doing.  
 <h1>Command & Conquer:Red Alert 2</h1>
 <p>
  <ul style="list-style-type:disc;">
   <li>In this game units set they objetive before they start moving.</li>
-  <li> Althought the player click on one tile only one unity will reach place, the rest of them select as their goal nearby that tile but following the same direcction as the orginal tile and parallel to this.</li>
-  <li>Also some of the units got the same goel so when one unit reach the goel the other ones stop when they are next to that unit.</li>
+  <li>The units try to mantein the inital positions. The rest of them select as their goal nearby that tile but following the same direcction as the orginal tile and parallel to this.</li>
+  <li>Also some of the units got the same goel so when one unit reach the goel the other ones stop when they are next to that one.</li>
 </ul>
  </p>
  
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ap3odnteoIs?start=57" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <h1>The Maestros</h1>
-<p>
- One thing to point out on this game is that the solution they gave to not have multiple units trying to reach the same destinetion is to mantein the locations they have between each other. To do this easist way is to find the middle center between entities and translate this point to the destination and place entities respect this one, respecting the original distance.
- <p>
+<p> As I said before in this game units mantein the inital formaton.<p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  <p>If you don't see it yet heres a gif to illustrate this</p>
-  
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation" width="560" align="center"/>
-<br/>
-   <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
-   
-   <p>Also this works really well when the group of unit is small and at the start of the movement they are near echa other, also it's a really simple implemantation<p>
  
- <p>The problem with this is that as they they started so far away of the group they end up separated, instiead to join the group. To solve this problem we are going to limitate the obset of the entities to the goal.
+   
+   <p>The transitive bumping is something that  works really well when the group of unit is small and at the start of the movement they are near echa other, also it's a really simple implemantation<p>
+ 
+ <p>The problem with this is that as they started so far away of the group they end up separated, instiead to join the group. To solve this problem we are going to limitate the obset of the entities to the goal.
 In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
  <br>
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true"/> 
