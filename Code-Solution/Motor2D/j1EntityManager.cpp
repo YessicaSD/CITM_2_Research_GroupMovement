@@ -64,7 +64,7 @@ bool j1EntityManager::PreUpdate(float dt)
 		}
 		else
 		{
-
+			PredictPossibleCollitions(); 
 			(*iter)->PreUpdate(dt);
 		
 			
@@ -159,10 +159,10 @@ bool j1EntityManager::Update(float dt)
 		//Center it 
 		Pixels_Destination += {(int)(App->map->data.tile_width*0.5), (int)(App->map->data.tile_height*0.5)};
 		iPoint origin;
-		
+
 		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
 		{
-			origin=App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
+			origin = App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
 			iPoint distance_middlePoint = (*iter)->position.ReturniPoint() - middlePoint_Group.ReturniPoint();
 			iPoint Pixels_goal = (distance_middlePoint + fl_mousePos_px).ReturniPoint();
 			destination = App->map->WorldToMap((int)Pixels_goal.x, (int)Pixels_goal.y);
@@ -172,10 +172,10 @@ bool j1EntityManager::Update(float dt)
 				Unit* selectedUnit = (Unit*)(*iter);
 				selectedUnit->goal = destination;
 				selectedUnit->state = getPath;
-				
+
 			}
 		}
-		
+
 	}
 	
 	
@@ -219,21 +219,54 @@ void j1EntityManager::PredictPossibleCollitions()
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 	{
 		u = (Unit*)*iter;
-		if (u->state == IncrementWaypoint)
+		if (u->state == followPath)
 		{
 			for (std::vector<j1Entity*>::iterator jiter = list_Entities.begin(); jiter != list_Entities.end(); ++jiter)
 			{
 				Unit* otherU = (Unit*)*jiter;
 				if (*iter != *jiter)
 				{
-					//if the position where other entitie is, is the entities next tile objetive
+					//TODO 3--------------------------------------------------------------------------------------------------------------
+					//if the position where other entitie is, is the entities next tile objetive------------------------------------------
 					if (otherU->TilePos == u->next_Goal)
 					{
 						if (otherU->state == idle)
 						{
-							
+							if (u->next_Goal == u->goal)
+							{
+								u->state = idle;
+							}
+							else
+							{
+								if (otherU->MoveOfTheWayOf(u) == true)
+								{
+									u->SetToWaiting(otherU);
+								}
+							}
 						}
 					}
+					//TODO 4--------------------------------------------------------------------------------------------------------
+					if (otherU->next_Goal == u->next_Goal)
+					{
+						if (otherU->state == waiting || u->state == waiting)
+						{
+
+						}
+						else
+						{
+							if (otherU->next_Goal == otherU->goal)
+							{
+								otherU->SetToWaiting(u);
+							}
+							else if (u->next_Goal == u->goal)
+							{
+								u->SetToWaiting(otherU);
+							}
+							else
+							otherU->SetToWaiting(u);
+						}
+					}
+
 				}
 			}
 		}

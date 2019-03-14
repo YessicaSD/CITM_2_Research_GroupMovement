@@ -299,7 +299,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 		//Here we flip last_path order -------------------------------------
 		std::vector<iPoint> aux;
-		for (uint i = last_path.size()-1; i > 0; --i)
+		for (int i = last_path.size()-1; i >= 0; --i)
 		{
 			aux.push_back(last_path.at(i));
 		}

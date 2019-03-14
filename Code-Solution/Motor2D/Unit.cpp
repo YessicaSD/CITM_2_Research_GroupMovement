@@ -6,17 +6,15 @@
 #include "j1Map.h"
 #include "j1EntityManager.h"
 #include "j1Input.h"
+#include "p2Log.h"
 //#include "SDL\include\SDL_rect.h
 Unit::Unit(fPoint position, SDL_Texture * tex, entities_types type):j1Entity(position,tex,type)
 {
-	posCollider.radio = 3;
+	posCollider.radius = 3;
 	posCollider.center = position;
 }
 void Unit::Draw(float dt)
 {
-	
-
-
 	SDL_Color color;
 	if (selected)
 	{
@@ -28,11 +26,13 @@ void Unit::Draw(float dt)
 	}
 	SDL_Rect frame = { position.x-5,position.y-5,10,10 };
 	App->render->DrawQuad(frame, color.r, color.g, color.b, color.a, true);
+	App->render->DrawCircle(position.x, position.y, posCollider.radius, 255, 255, 255, 255);
 	
 }
 
 void Unit::Move(float dt)
 {
+	TilePos = App->map->WorldToMap((int)position.x, (int)position.y);
 	UnitStateMachine(dt);
 }
 
@@ -58,8 +58,79 @@ void Unit::OnCollision(Collider * c1, Collider * c2)
 }
 bool Unit::MoveOfTheWayOf(Unit* u)
 {
-	return true;
+	
+	iPoint neightBoar[4];
+	neightBoar[UnitDirection_Up] = { TilePos.x,TilePos.y - 1 }; //up
+	neightBoar[UnitDirection_Down] = { TilePos.x,TilePos.y + 1 }; //down
+	neightBoar[UnitDirection_Left] = { TilePos.x - 1,TilePos.y }; //left
+	neightBoar[UnitDirection_Right] = { TilePos.x + 1,TilePos.y }; //right
+
+	for (uint i = 0; i < 4; ++i)
+	{
+		if (App->pathfinding->IsWalkable(neightBoar[i])!=true)
+		{
+			neightBoar[i].SetToZero();
+		}
+	}
+	//x axis --------------------------------------
+	if (u->state_diretion == UnitDirection_Left || u->state_diretion == UnitDirection_Right)
+	{
+		if (neightBoar[UnitDirection_Up].IsZero() != true
+			&& App->entities->InThisTile_IsUnits(neightBoar[UnitDirection_Up]) == nullptr)
+		{
+			state = getPath;
+			goal = neightBoar[UnitDirection_Up];
+			return true;
+		}
+
+
+		else if (neightBoar[UnitDirection_Down].IsZero() != true
+			&& App->entities->InThisTile_IsUnits(neightBoar[UnitDirection_Down]) == nullptr)
+		{
+			state = getPath;
+			goal = neightBoar[UnitDirection_Down];
+			return true;
+		}
+
+		else
+		{
+			return false;
+		}
+	}
+
+	else
+	{
+		if (neightBoar[UnitDirection_Left].IsZero() != true
+			&& App->entities->InThisTile_IsUnits(neightBoar[UnitDirection_Left]) == nullptr)
+		{
+			state = getPath;
+			goal = neightBoar[UnitDirection_Left];
+			return true;
+		}
+
+		else if (neightBoar[UnitDirection_Right].IsZero() != true
+			&& App->entities->InThisTile_IsUnits(neightBoar[UnitDirection_Left]) == nullptr)
+		{
+			state = getPath;
+			goal = neightBoar[UnitDirection_Right];
+			return true;
+		}
+
+		else
+		{
+			return false;
+		}
+	}
+
+	
 }
+
+void Unit::SetToWaiting(Unit * waitU)
+{
+	state = waiting;
+	waitingUnit = waitU;
+}
+
 void Unit::UnitStateMachine(float dt)
 {
 	switch (state)
@@ -67,10 +138,15 @@ void Unit::UnitStateMachine(float dt)
 	case idle:
 		break;
 	case waiting:
-		/*if (waitTime.ReadSec() > 0.1)
-		{*/
-		state = IncrementWaypoint;
-		/*}*/
+	{
+		if (next_Goal != waitingUnit->next_Goal && next_Goal != waitingUnit->position.ReturniPoint())
+		{
+			if (Path.size() > 0)
+				state = followPath;
+			else
+				state = getPath;
+		}
+	}
 		break;
 	case getPath:
 	{
@@ -79,26 +155,19 @@ void Unit::UnitStateMachine(float dt)
 		{
 			Path.clear();
 			Path = *App->pathfinding->GetLastPath();
-			Path.erase(Path.begin());
-			next_Goal = *Path.begin();
 			state = IncrementWaypoint;
+			Path.erase(Path.begin());
 			
 		}
 	}
 
 	break;
-	case ReachedGoal:
-	{
-
-	}
-	break;
-	case IncrementWaypoint:
+	case followPath:
 	{
 		if (Path.size() > 0)
 		{
 
-			
-			iPoint world_next_pos = App->map->MapToWorld(next_Goal.x , next_Goal.y );
+			iPoint world_next_pos = App->map->MapToWorld(next_Goal.x, next_Goal.y);
 			fPoint aux = { (float)world_next_pos.x + App->map->data.tile_width*0.5F,(float)world_next_pos.y + App->map->data.tile_height*0.5F };
 
 
@@ -108,17 +177,31 @@ void Unit::UnitStateMachine(float dt)
 			if (posCollider.IsPointIn(aux))
 			{
 				Path.erase(Path.begin());
-				next_Goal = *Path.begin();
 				TilePos = next_Goal;
-
+				state = IncrementWaypoint;
 			}
 
 		}
 
-		iPoint aux = { (int)(speed.x*dt*20 ),(int)(speed.y*dt*20) };
+		iPoint aux = { (int)(speed.x/**dt * 10*/),(int)(speed.y/**dt * 10*/) };
 		position.x += (float)aux.x;
 		position.y += (float)aux.y;
 		posCollider.center = position;
+	}
+	break;
+
+	case IncrementWaypoint:
+	{
+		
+		next_Goal = *Path.begin();
+
+		iPoint aux = next_Goal - TilePos;
+		SetUnitDirectionByValue(aux.Return_fPoint());
+		state = followPath;
+
+		if (Path.size() == 0)
+			state = idle;
+		
 	}
 	break;
 	case max_state:

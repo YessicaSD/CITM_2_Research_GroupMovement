@@ -13,7 +13,6 @@ struct SingleUnit;
 #define MAX_UNIT_PRIORITY 8
 enum Unit_Direction
 {
-	UnitDirection_Idle,
 	UnitDirection_Up,
 	UnitDirection_Down,
 	UnitDirection_Left,
@@ -21,7 +20,8 @@ enum Unit_Direction
 	UnitDirection_UpLeft,
 	UnitDirection_UpRight,
 	UnitDirection_DownLeft,
-	UnitDirection_DownRight
+	UnitDirection_DownRight,
+	UnitDirection_Idle,
 };
 
 enum Unit_State
@@ -29,8 +29,8 @@ enum Unit_State
 	idle,
 	waiting,
 	getPath,
-	ReachedGoal,
 	IncrementWaypoint,
+	followPath,
 	max_state
 };
 
@@ -81,6 +81,8 @@ public:
 
 	SingleUnit* GetSingleUnit() const;
 	bool Unit::MoveOfTheWayOf(Unit* u);
+
+	void SetToWaiting(Unit* waitU);
 };
 
 #endif // __DYNAMIC_ENTITY_H_

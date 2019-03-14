@@ -4,13 +4,13 @@
 struct Circle
 {
 	fPoint center;
-	float radio;
+	float radius;
 	bool IsPointIn(fPoint point)
 	{
-		if (point.x > (center.x - radio)
-			&& point.x< (center.x + radio)
-			&& point.y >(center.y - radio)
-			&& point.y < (center.y + radio))
+		if (point.x >= (center.x - radius)
+			&& point.x< (center.x + radius)
+			&& point.y >=(center.y - radius)
+			&& point.y < (center.y + radius))
 			return true;
 		else
 			return false;
