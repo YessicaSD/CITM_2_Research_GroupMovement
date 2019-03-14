@@ -4,18 +4,18 @@ This content is generated for the second year’s subject Project 2, under super
 
 <h1>Introduction</h1>
 <p>The objetive of this research is to implement group pathfinding. 
-To reach this we'll analisy differents group movement implented in RTS games, we'll see differents forms to implemantate it.
-This fiature it's something that you can do in many ways, it depens in your game caracteristics.</p>
-<i>Disclaimer: Although this implamenteation is based on diferents RTS games it could also be applaid in differens kind of games. 
+To reach this we'll analysis differents group movement implented in RTS games, we'll see different forms to implemantate it.
+This feature's something that you can do in many ways, it depends on your game characteristics.</p>
+<i>Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
  AND please check out reference links I used to develop this project you could find more information</i>
  
  
  <h1>Pathfinding</h1>
- To implement a group movement the first step is to be able to move one unit, this one needs to find the bes way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html" >A* algorithm</a>, it's generaly used in most of the games couse it takes lowe comupation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
- If you are a beginer and your game dosn't need that many units, so you can also see Breadth First Search algorithm or Dijkstra’s Algorithm. This methos are more easy to understand and also to implement and a good point to start. 
+ To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lowe computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
+ If you are a beginner and your game doesn't need that many units, so you can also see Breadth First Search algorithm or Dijkstra’s Algorithm. These methods are more easy to understand and also to implement and a good point to start. 
  
  <h1>Goal Tile</h1>
-<p>If we try units to move to the same tile they would get overlapping, or if we got collition sistem only one unit would get there and the other was will still try to move<p>
+<p>If we try units to move to the same Tile they would get overlapping, or if we got collision system only one unit would get there and the other was will still try to move<p>
   <img src="https://media.indiedb.com/images/articles/1/254/253140/auto/8mfFxGS.gif"/>
  
  To solve this one idea is to transfer the state of "found goal" through units, so if a unit tries to get in a tile were there is one already but both of them got the same the destination and one found it the other one will too, and stop moving.
@@ -26,9 +26,9 @@ This fiature it's something that you can do in many ways, it depens in your game
  - Units placed in line instead of a group
  <img src=" https://i.imgur.com/9zImMiX.gif"/>
 
-So what we are going to do is determine an offset to the goal so every entity got it own goal. This offset is calculated with the start position of every unit. We find the middle center between entities and translate this point to the destination and place entities respecting the original distance between this one and the middle point.
+So what we are going to do is determine an offset to the goal so every entity got its own goal. This offset is calculated with the start position of every unit. We find the middle center between entities and translate this point to the destination and place entities respecting the original distance between this one and the middle point.
 
- <p>If you don't see it yet heres a gif to illustrate this</p>
+ <p>If you don't see it yet here's a gif to illustrate this</p>
   
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation" width="560" align="center"/>
 <br/>
@@ -47,13 +47,14 @@ This is something that games like Command & Conquer: Red Alert 2 and The Maestro
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ap3odnteoIs?start=57" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <h1>The Maestros</h1>
-<p> As I said before in this game units mantein the inital formaton.<p>
+<p> As I said before in this game units mantein the inital formaton.
+  In this game, you could see that on the feet of every entity selected there is a circle this is used as the area that an entity take up and it is considered to determinate the position of the entities. So when an entity is going to a tile to know that this one has reached it we watch if that point was inside this area.<p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
  
    
-   <p>The transitive bumping is something that  works really well when the group of unit is small and at the start of the movement they are near echa other, also it's a really simple implemantation<p>
+   <p>The transitive bumping is something that  works really well when the group is small and at the start of the movement they are near each other, also it's a really simple implemantation<p>
  
- <p>The problem with this is that as they started so far away of the group they end up separated, instiead to join the group. To solve this problem we are going to limitate the obset of the entities to the goal.
+ <p>The problem with this is that as they started so far away from the group they end up separated, instead to join the group. To solve this problem we are going to limit the offset of the entities to the goal.
 In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
  <br>
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true" width="400"/> 
@@ -62,18 +63,18 @@ In my case I made a Lider in case a unit don't have a path cause it's goal was i
  <i>before and after</i>
  <br>
 <p>
-   In this game you could see that on the feets of every entity selected there is a circle this is used as the area that a entity ocuped and it is considered to determinate the position of the enitites. So when a entity is going to a tile to know that this one has reached it we watch if that point was inside this area.
+ 
  
    <h1>Collition system</h1>
    For preventing entities to collide to each other, we are going to not let them collide in the first place. 
-   To do this before they stat moving we are going to consider all units, their state and their move. We are going to identify witch kind of collition the unity is going to have so we can prevent it.
+   To do this before they start moving we are going to consider all units, their state, and their move. We are going to identify which kind of collision the unity is going to have so we can prevent it.
    
    
 <h3>First kind of collition </h3>
 <p>
 <i>An unit try to enter in a tile where there is a unit not moving.</i>
 To solve this problem you should consider de direction of the unit that is moving.
-To move the one that lies stile in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the oposite make. 
+To move the one that lies still in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the opposite make. 
 <p>
 <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="400" align="left">
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
@@ -87,10 +88,10 @@ To move the one that lies stile in a tile that doesn't bother the unit that is m
 <i>Two units want to get into the same tile, in this one there is no unit.</i>
 <br>
 <p>To solve this possible collition one unit should wait the other one to move, to this tile and get out.
-Also consider if this tile is the goal of one off them, in witch case the first unit will pass would be the one that it's not.
-You proparly won't notice this implementation depending on the units speed.<p>
+Also consider if this tile is the goal of one of them, in which case the first unit will pass would be the one that it's not.
+You probably won't notice this implementation depending on the units speed.<p>
  
- <h3> Third kinf of collition</h3>
+ <h3> Third kind of collition</h3>
 2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
 
  
