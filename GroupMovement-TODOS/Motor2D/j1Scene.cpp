@@ -92,7 +92,7 @@ bool j1Scene::Update(float dt)
 		if (App->pathfinding->IsWalkable(MousePos)==true && App->entities->InThisTile_IsUnits(MousePos)==false)
 		{
 			iPoint WorldPos_Tile = App->map->MapToWorld(MousePos.x, MousePos.y);
-			entityPos = { (float)WorldPos_Tile.x, (float)WorldPos_Tile.y };
+			entityPos = { (float)WorldPos_Tile.x+5, (float)WorldPos_Tile.y+5 };
 			App->entities->AddEntity(entities_types::ALLIED_INFANT, entityPos);
 		}
 	}

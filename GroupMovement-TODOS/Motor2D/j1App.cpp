@@ -26,7 +26,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	pathfinding = new j1PathFinding();
 	entities = new j1EntityManager();
-
+	//movement = new j1Movement();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);

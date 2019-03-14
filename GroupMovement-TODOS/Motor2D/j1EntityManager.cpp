@@ -57,13 +57,17 @@ bool j1EntityManager::PreUpdate(float dt)
 	uint vec_size = list_Entities.size();
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter!= list_Entities.end(); ++iter)
 	{
+		Unit* u = (Unit*)(*iter);
 		if ((*iter)->toDelete == true)
 		{
 			list_Entities.erase(iter);
 		}
 		else
 		{
+			PredictPossibleCollitions(); 
 			(*iter)->PreUpdate(dt);
+		
+			
 		}
 	}
 
@@ -72,21 +76,35 @@ bool j1EntityManager::PreUpdate(float dt)
 
 bool j1EntityManager::Update(float dt)
 {
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+	{
+		(*iter)->Move(dt);
+	}
+
+	//Get mouse pos
+	iPoint mouse_pos;
+	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
+
 	static iPoint Pos_Mouse_ClickDown;
 	static iPoint Pos_Mouse_ClickRepeat;
-	static j1KeyState last_righ_click_state;
+	
 	static SDL_Rect selection_rect;
 	//Here we get the right click position in click down ------------------------------------
 	if (App->input->GetMouseButtonState(3)== j1KeyState::KEY_DOWN)
 	{
+		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
+		{
+			(*iter)->selected = false;
+		}
+		selected_units.clear();
 		App->input->GetMousePosition(Pos_Mouse_ClickDown.x, Pos_Mouse_ClickDown.y);
-		last_righ_click_state = j1KeyState::KEY_DOWN;
+	
 	}
 
 	//Here we generete the seletion area --------------------------------------------------------------------------------------
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_REPEAT)
 	{
-		App->input->GetMousePosition(Pos_Mouse_ClickRepeat.x, Pos_Mouse_ClickRepeat.y);
+		Pos_Mouse_ClickRepeat = mouse_pos;
 		selection_rect.x = (Pos_Mouse_ClickDown.x < Pos_Mouse_ClickRepeat.x) ? Pos_Mouse_ClickDown.x : Pos_Mouse_ClickRepeat.x;
 		selection_rect.y = (Pos_Mouse_ClickDown.y < Pos_Mouse_ClickRepeat.y) ? Pos_Mouse_ClickDown.y : Pos_Mouse_ClickRepeat.y;
 		selection_rect.w = abs(Pos_Mouse_ClickRepeat.x - Pos_Mouse_ClickDown.x);
@@ -96,9 +114,11 @@ bool j1EntityManager::Update(float dt)
 	}
 
 	//When we realese the right button from the mouse we select entites that are inside the selection area-------------------------
-	
+
 	if (App->input->GetMouseButtonState(3) == j1KeyState::KEY_UP)
 	{
+		selected_units.clear();
+		
 		for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
 			if ((*iter)->position.x >= selection_rect.x
@@ -107,11 +127,17 @@ bool j1EntityManager::Update(float dt)
 				&& (*iter)->position.y <= selection_rect.y + selection_rect.h)
 			{
 				(*iter)->selected = true;
+				Unit* aux = (Unit*)(*iter);
 				selected_units.push_back(*iter);
+				
 			}
-		}
 
+		}
+		//TODO 2- uncomment it when funtion is done
+		//Calculate_middle_Point();
 	}
+	
+	
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
@@ -121,28 +147,67 @@ bool j1EntityManager::Update(float dt)
 		selected_units.clear();
 	}
 
-	iPoint destination  = App->input->GetMousePos_Tiles();
-	if (App->input->GetMouseButtonState(1) == j1KeyState::KEY_DOWN && App->pathfinding->IsWalkable(destination))
+
+	//Here we click the destination-----------------------------------------------------------------------------
+	//TODO 2: Now for each entity find it's goal respecting original collocation
+	
+	if (App->input->GetMouseButtonState(1) == j1KeyState::KEY_DOWN && App->pathfinding->IsWalkable(App->input->GetMousePos_Tiles()))
 	{
-		iPoint origin;
+		Calculate_middle_Point();
+		iPoint fl_mousePos_px = App->render->ScreenToWorld(mouse_pos.x, mouse_pos.y);
+		iPoint Destination_Tile = App->map->WorldToMap(fl_mousePos_px.x, fl_mousePos_px.y);
+		//Center it 
 		
+		iPoint origin;
+		Unit* Leader = nullptr;
+		bool createdLeader=false;
+		//Calculete max objeset Ratius
+		int max_offset_goal=(int)(selected_units.size()*0.5F);
+		//max_offset_goal += 5;
 		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
 		{
-			origin=App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
-			if (App->pathfinding->CreatePath(origin, destination) != -1)
+			iPoint Tile_goal;
+			origin = App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
+			iPoint distance_middlePoint = (*iter)->position.ReturniPoint() - middlePoint_Group.ReturniPoint();
+			iPoint Pixels_goal = (distance_middlePoint + fl_mousePos_px).ReturniPoint();
+			Tile_goal = App->map->WorldToMap((int)Pixels_goal.x, (int)Pixels_goal.y);
+			if (Tile_goal.x >= Destination_Tile.x - max_offset_goal
+				&& Tile_goal.x <= Destination_Tile.x + max_offset_goal
+				&& Tile_goal.y >= Destination_Tile.y - max_offset_goal
+				&& Tile_goal.y <= Destination_Tile.y + max_offset_goal)
 			{
-				DynamicEntity* selectedUnit = (DynamicEntity*)(*iter);
-				selectedUnit->Path.clear();
-				selectedUnit->Path=*App->pathfinding->GetLastPath();
-				selectedUnit->Path.erase(selectedUnit->Path.begin());
+				if (App->pathfinding->IsWalkable(Tile_goal))
+				{
+					Unit* selectedUnit = (Unit*)(*iter);
+					selectedUnit->goal = Tile_goal;
+					selectedUnit->state = getPath;
+					if (createdLeader == false)
+					{
+						Leader = selectedUnit;
+						createdLeader = true;
+					}
+				}
 			}
-
 		}
-		
-	}
-	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
-	{
-		(*iter)->Move(dt);
+		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
+		{
+			Unit* selectedUnit = (Unit*)(*iter);
+			if (Leader != nullptr)
+			{
+				if (selectedUnit->state != getPath)
+				{
+					selectedUnit->goal = Leader->goal;
+					selectedUnit->state = getPath;
+				}
+			}
+			else
+			{
+				selectedUnit->goal = Destination_Tile;
+				selectedUnit->state = getPath; 
+				Leader = selectedUnit;
+			}
+			
+		}
 	}
 	
 	
@@ -152,12 +217,20 @@ bool j1EntityManager::Update(float dt)
 
 bool j1EntityManager::PostUpdate(float dt)
 {
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+	{
+		(*iter)->DebugDraw();
+	}
 	
 	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
 		{
 			(*iter)->Draw(dt);
 		}
 	
+	if (selected_units.size() > 0)
+	{
+		App->render->DrawCircle(middlePoint_Group.x, middlePoint_Group.y, 2, 255, 100, 100, 255);
+	}
 	return true;
 }
 
@@ -171,6 +244,72 @@ bool j1EntityManager::CleanUp()
 	return true;
 }
 
+void j1EntityManager::PredictPossibleCollitions()
+{
+	//TODO 3 predict collitons ------------------------------------------------------------------------------------------------
+	Unit* u;
+	for (std::vector<j1Entity*>::iterator iter = list_Entities.begin(); iter != list_Entities.end(); ++iter)
+	{
+		u = (Unit*)*iter;
+		if (u->state == followPath)
+		{
+			for (std::vector<j1Entity*>::iterator jiter = list_Entities.begin(); jiter != list_Entities.end(); ++jiter)
+			{
+				Unit* otherU = (Unit*)*jiter;
+				if (*iter != *jiter)
+				{
+					//TODO 3--------------------------------------------------------------------------------------------------------------
+					//if the position where other entitie is, is the entities next tile objetive------------------------------------------
+					if (otherU->TilePos == u->next_Goal)
+					{
+						if (otherU->state == idle)
+						{
+							if (u->next_Goal == u->goal)
+							{
+								u->state = idle;
+							}
+							else
+							{
+								if (otherU->MoveOfTheWayOf(u) == true)
+								{
+									u->SetToWaiting(otherU);
+								}
+								else
+								{
+									u->state = idle;
+								}
+							}
+						}
+					}
+					//TODO 4--------------------------------------------------------------------------------------------------------
+					if (otherU->next_Goal == u->next_Goal)
+					{
+						if (otherU->state == waiting || u->state == waiting)
+						{
+
+						}
+						else
+						{
+							if (otherU->next_Goal == otherU->goal)
+							{
+								otherU->SetToWaiting(u);
+							}
+							else if (u->next_Goal == u->goal)
+							{
+								u->SetToWaiting(otherU);
+							}
+							else
+							otherU->SetToWaiting(u);
+						}
+					}
+
+				}
+			}
+		}
+	}
+}
+
+
 
 j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)
 {
@@ -180,8 +319,10 @@ j1Entity* j1EntityManager::AddEntity(entities_types type, fPoint pos)
 	{
 	case ALLIED_INFANT:
 	{
-		newEntity = new DynamicEntity(pos, Entities_Textures[type], type);
-		DynamicEntity* DynPointer = (DynamicEntity*)newEntity;
+		newEntity = new Unit(pos, Entities_Textures[type], type);
+		Unit* DynPointer = (Unit*)newEntity;
+		DynPointer->TilePos = App->map->WorldToMap((int)pos.x, (int)pos.y);
+		DynPointer->goal = DynPointer->TilePos;
 	}
 		
 	break;
@@ -228,37 +369,8 @@ j1Entity* j1EntityManager::InThisTile_IsUnits(iPoint tile)
 	return ret;
 }
 
-/*
-bool j1Entities::LoadAnimations(pugi::xml_node animNode) 
+fPoint j1EntityManager::Calculate_middle_Point()
 {
-	bool ret = true;
-	int numAnim = 0;
-	for (pugi::xml_node thisanimNode = animNode; thisanimNode; thisanimNode = thisanimNode.next_sibling("animation"))
-		++numAnim;
-
-	Animation* anim_aux = new Animation[numAnim];
-
-	SDL_Rect frameRect;
-	int animArrayNum = 0;
-	for (pugi::xml_node thisAnimNode = animNode; thisAnimNode; thisAnimNode = thisAnimNode.next_sibling("animation"))
-	{
-		anim_aux[animArrayNum].speed = thisAnimNode.attribute("anim_speed").as_float();
-		for (pugi::xml_node frame = thisAnimNode.child("frame"); frame; frame=frame.next_sibling("frame"))
-		{
-			frameRect.x = frame.attribute("x").as_int();
-			frameRect.y = frame.attribute("y").as_int();
-			frameRect.w = frame.attribute("width").as_int();
-			frameRect.h = frame.attribute("height").as_int();
-		
-			anim_aux[animArrayNum].PushBack(frameRect);
-		}
-		++animArrayNum;
-	}
-	entitiesAnimation.add(anim_aux);
-
+	fPoint ret;
 	return ret;
 }
-
-*/
-
-

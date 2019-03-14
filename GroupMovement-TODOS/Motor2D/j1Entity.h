@@ -23,9 +23,10 @@ protected:
 public:
 	SDL_Texture * texture;
 	bool toDelete = false;
+
 	fPoint position = {0.0F,0.0F};
-	
 	iPoint TilePos = {0,0};
+
 	Collider* collider = nullptr;
 	entities_types type;
 	bool death = false, selected = false;
@@ -38,7 +39,8 @@ public:
 	virtual bool PreUpdate(float dt) { return true; };
 	virtual void Move(float dt) {};
 	virtual void Draw(float dt) {};
-	//virtual void OnCollision(Collider* collider) {};
+	virtual void DebugDraw() {};
+	virtual void OnCollision(Collider* collider) {};
 	
 };
 
