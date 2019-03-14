@@ -4,7 +4,8 @@ This content is generated for the second year’s subject Project 2, under super
 
 <h1>Introduction</h1>
 <p>The objetive of this research is to implement group pathfinding. 
-To reach this we'll analisy differents group movement implented in RTS games, we'll get the best caracteristics of each one or most of them and create the best implementation posible.</p>
+To reach this we'll analisy differents group movement implented in RTS games, we'll see differents forms to implemantate it.
+This fiature it's something that you can do in many ways, it depens in your game caracteristics.</p>
 <i>Disclaimer: Although this implamenteation is based on diferents RTS games it could also be applaid in differens kind of games. 
  AND please check out reference links I used to develop this project you could find more information</i>
 
@@ -28,25 +29,40 @@ To reach this we'll analisy differents group movement implented in RTS games, we
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <p>If you don't see it yet heres a gif to illustrate this</p>
   
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation"/>
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation" width="560" align="center"/>
 <br/>
    <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
    
-   <p>Also this works really well when the group of unit is small and start of the movement they are near echa other but it's a really simple implemantation<p>
+   <p>Also this works really well when the group of unit is small and at the start of the movement they are near echa other, also it's a really simple implemantation<p>
    
    <h1>Collition system</h1>
    For preventing entities to collide to each other, we are going to not let them collide in the first place. 
-   To do this before they stat moving we are going to consider all units, their state and their move.
-   enum Unit_State
-{
-	idle, 
-	waiting, //Wait to another unit to move
-	getPath, // Create entities path
-	ReachedGoal, 
-	IncrementWaypoint, // Move
-	max_state
-};
+   To do this before they stat moving we are going to consider all units, their state and their move. We are going to identify witch kind of collition the unity is going to have so we can prevent it.
    
+   
+<h3>First kind of collition </h3>
+<p>
+<i>An unit try to enter in a tile where there is a unit not moving.</i>
+To solve this problem you should consider de direction of the unit that is moving.
+To move the one that lies stile in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the oposite make. 
+<p>
+<img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="400" align="left">
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
+ <br>
+ 
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/jA2epda-RkM?start=78" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ <i>This is done in the "Supreme Commander 2" in witch units move away from the path of other </i>
+ 
+ <h3>Second kind of collition </h3>
+<i>Two units want to get into the same tile, in this one there is no unit.</i>
+<br>
+<p>To solve this possible collition one unit should wait the other one to move, to this tile and get out.
+Also consider if this tile is the goal of one off them, in witch case the first unit will pass would be the one that it's not.<p>
+ 
+ 
+2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
+
+ 
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
   <li> <a href="https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php" >https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</a></li>

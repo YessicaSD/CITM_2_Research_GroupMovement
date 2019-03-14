@@ -3,6 +3,11 @@ I'm Yessica Servin Dominguez student of the degree in _Design and development of
 
 The objetive of this project is to explain how to move multiple entities.
 
+Controlls
+- number one button to create entity
+- Hold and Drag mouse's right button to create the selection area. 
+- Left Click to make selected units to move in a walkable point.
+
 Contact:
 * yessica.servindominguez@gmail.com
 * Find mi on Github as [YessicaSD](https://github.com/YessicaSD)
