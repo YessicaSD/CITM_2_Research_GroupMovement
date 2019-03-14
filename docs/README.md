@@ -90,7 +90,7 @@ To move the one that lies stile in a tile that doesn't bother the unit that is m
 Also consider if this tile is the goal of one off them, in witch case the first unit will pass would be the one that it's not.
 You proparly won't notice this implementation depending on the units speed.<p>
  
- 
+ <h3> Third kinf of collition</h3>
 2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
 
  
