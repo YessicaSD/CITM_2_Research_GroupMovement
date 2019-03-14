@@ -31,6 +31,10 @@ To reach this we'll analisy differents group movement implented in RTS games, we
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation"/>
 <br/>
    <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
+   
+   <p>Also this works really well when the group of unit is small and start of the movement they are near echa other but it's a really simple implemantation<p>
+   
+   
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
   <li> <a href="https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php" >https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</a></li>
