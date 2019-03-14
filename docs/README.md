@@ -35,6 +35,7 @@ This fiature it's something that you can do in many ways, it depens in your game
  
  <p>The problem with this is that as they they started so far away of the group they end up separated, instiead to join the group. To solve this problem we are going to limitate the obset of the entities to the goal.
 In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
+ <br>
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true" width ="400"/> 
  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true" width ="400" align="left"/> 
 
