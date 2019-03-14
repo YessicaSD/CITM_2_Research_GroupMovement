@@ -113,7 +113,7 @@ void Unit::UnitStateMachine(float dt)
 			if (aux == int_pos.Return_fPoint())
 			{
 				Path.erase(Path.begin());
-				
+				TilePos = tile_next_pos;
 			}
 
 		}
