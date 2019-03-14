@@ -29,7 +29,7 @@ This fiature it's something that you can do in many ways, it depens in your game
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cLW7W1IzpJw?start=62" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <p>If you don't see it yet heres a gif to illustrate this</p>
   
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation" width="757"/>
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/GroupMovement.gif?raw=true" alt="GifExplenation" width="560" align="center"/>
 <br/>
    <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
    
@@ -37,16 +37,28 @@ This fiature it's something that you can do in many ways, it depens in your game
    
    <h1>Collition system</h1>
    For preventing entities to collide to each other, we are going to not let them collide in the first place. 
-   To do this before they stat moving we are going to consider all units, their state and their move. We are going to identify witch coind of collition the unity is going to have so we can prevent it.
-1. Two agents reach the same cell (SameCell).
+   To do this before they stat moving we are going to consider all units, their state and their move. We are going to identify witch kind of collition the unity is going to have so we can prevent it.
+   
+   
+<h3>First kind of collition </h3>
+<p>
+<i>An unit try to enter in a tile where there is a unit not moving.</i>
+To solve this problem you should consider de direction of the unit that is moving.
+To move the one that lies stile in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the oposite make. 
+<p>
+<img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="400" align="left">
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
+ <br>
+ 
+ <h3>Second kind of collition </h3>
+<i>Two units want to get into the same tile, in this one there is no unit.</i>
+<p>To solve this possible collition one unit should wait the other one to move, to this tile and get out.
+Also consider if this tile is the goal of one off them, in witch case the first unit will pass would be the one that it's not.<p>
+ 
+ 
 2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
 
-3. An agent reaches the cell of another agent (ItsCell).
-To solve this problem you should consider de direction of the unit that is moving.
-To move the one that lies stile in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you can make the oposite. 
-
-<img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="561" align="left">
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="561" > 
+ 
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
   <li> <a href="https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php" >https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</a></li>
