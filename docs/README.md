@@ -40,7 +40,10 @@ This fiature it's something that you can do in many ways, it depens in your game
    To do this before they stat moving we are going to consider all units, their state and their move. We are going to identify witch coind of collition the unity is going to have so we can prevent it.
 1. Two agents reach the same cell (SameCell).
 2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
+
 3. An agent reaches the cell of another agent (ItsCell).
+To solve this problem you should consider de direction of the unit that is moving.
+To move the one that lies stile in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you can make the oposite. 
 
    
 <h2>Reference information</h2>
