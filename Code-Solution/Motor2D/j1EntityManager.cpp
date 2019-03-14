@@ -180,15 +180,15 @@ bool j1EntityManager::Update(float dt)
 					Unit* selectedUnit = (Unit*)(*iter);
 					selectedUnit->goal = Tile_goal;
 					selectedUnit->state = getPath;
-					/*if (createdLeader == false)
+					if (createdLeader == false)
 					{
 						Leader = selectedUnit;
 						createdLeader = true;
-					}*/
+					}
 				}
 			}
 		}
-	/*	for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
+		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
 		{
 			Unit* selectedUnit = (Unit*)(*iter);
 			if (Leader != nullptr)
@@ -206,7 +206,7 @@ bool j1EntityManager::Update(float dt)
 				Leader = selectedUnit;
 			}
 			
-		}*/
+		}
 	}
 	
 	
@@ -272,6 +272,10 @@ void j1EntityManager::PredictPossibleCollitions()
 								if (otherU->MoveOfTheWayOf(u) == true)
 								{
 									u->SetToWaiting(otherU);
+								}
+								else
+								{
+									u->state = idle;
 								}
 							}
 						}
