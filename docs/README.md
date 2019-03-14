@@ -35,8 +35,11 @@ This fiature it's something that you can do in many ways, it depens in your game
  
  <p>The problem with this is that as they they started so far away of the group they end up separated, instiead to join the group. To solve this problem we are going to limitate the obset of the entities to the goal.
 In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
+ <br>
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true"/> 
  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true"/> 
- 
+ <i>before and after</i>
+ <br>
 <p>
    In this game you could see that on the feets of every entity selected there is a circle this is used as the area that a entity ocuped and it is considered to determinate the position of the enitites. So when a entity is going to a tile to know that this one has reached it we watch if that point was inside this area.
  
