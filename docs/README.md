@@ -50,14 +50,16 @@ To move the one that lies stile in a tile that doesn't bother the unit that is m
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
  <br>
  
- <iframe width="560" height="315" src="https://www.youtube.com/embed/jA2epda-RkM?start=78" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/jA2epda-RkM?start=78" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen align="center"></iframe>
+ <br>
  <i>This is done in the "Supreme Commander 2" in witch units move away from the path of other </i>
  
  <h3>Second kind of collition </h3>
 <i>Two units want to get into the same tile, in this one there is no unit.</i>
 <br>
 <p>To solve this possible collition one unit should wait the other one to move, to this tile and get out.
-Also consider if this tile is the goal of one off them, in witch case the first unit will pass would be the one that it's not.<p>
+Also consider if this tile is the goal of one off them, in witch case the first unit will pass would be the one that it's not.
+You proparly won't notice this implementation depending on the units speed.<p>
  
  
 2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
