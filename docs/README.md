@@ -4,7 +4,8 @@ This content is generated for the second year’s subject Project 2, under super
 
 <h1>Introduction</h1>
 <p>The objetive of this research is to implement group pathfinding. 
-To reach this we'll analisy differents group movement implented in RTS games, we'll get the best caracteristics of each one or most of them and create the best implementation posible.</p>
+To reach this we'll analisy differents group movement implented in RTS games, we'll see differents forms to implemantate it.
+This fiature it's something that you can do in many ways, it depens in your game caracteristics.</p>
 <i>Disclaimer: Although this implamenteation is based on diferents RTS games it could also be applaid in differens kind of games. 
  AND please check out reference links I used to develop this project you could find more information</i>
 
@@ -32,20 +33,15 @@ To reach this we'll analisy differents group movement implented in RTS games, we
 <br/>
    <i>The blue point is the middle point and the red one is the destination, and squares are entities</i>
    
-   <p>Also this works really well when the group of unit is small and start of the movement they are near echa other but it's a really simple implemantation<p>
+   <p>Also this works really well when the group of unit is small and at the start of the movement they are near echa other, also it's a really simple implemantation<p>
    
    <h1>Collition system</h1>
    For preventing entities to collide to each other, we are going to not let them collide in the first place. 
-   To do this before they stat moving we are going to consider all units, their state and their move.
-   enum Unit_State
-{
-	idle, 
-	waiting, //Wait to another unit to move
-	getPath, // Create entities path
-	ReachedGoal, 
-	IncrementWaypoint, // Move
-	max_state
-};
+   To do this before they stat moving we are going to consider all units, their state and their move. We are going to identify witch coind of collition the unity is going to have so we can prevent it.
+1. Two agents reach the same cell (SameCell).
+2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
+3. An agent reaches the cell of another agent (ItsCell).
+
    
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
