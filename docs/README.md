@@ -74,38 +74,56 @@ In my case I made a Lider in case a unit don't have a path cause it's goal was i
    
 <h3>First kind of collition </h3>
 <p>
+ <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura.PNG"/>
 <i>An unit try to enter in a tile where there is a unit not moving.</i>
 To solve this problem you should consider de direction of the unit that is moving.
 To move the one that lies still in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the opposite make. 
-<img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura.PNG"/>
+</p>
  <br>
-<p>
+ <p>
 <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="400" align="left">
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
+ </p>
+ <p>
  <br>
- 
  <iframe width="560" height="315" src="https://www.youtube.com/embed/jA2epda-RkM?start=78" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen align="center"></iframe>
  <br>
  <i>This is done in the "Supreme Commander 2" in witch units move away from the path of other </i>
+ </p>
  
  <br>
  <h3>Second kind of collition </h3>
+ <p>
+  <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura2.PNG?raw=true"/>
 <i>Two units want to get into the same tile, in this one there is no unit.</i>
+ </p>
 <br>
+
 <p>To solve this possible collition one unit should wait the other one to move, to this tile and get out.
 Also consider if this tile is the goal of one of them, in which case the first unit will pass would be the one that it's not.
 You probably won't notice this implementation depending on the units speed.<p>
- <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura2.PNG?raw=true"/>
+
 <br>
  
  
 <h3> Third kind of collition</h3>
+<p>
+ <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura3.PNG?raw=true"/>
 <i>Two agents reach the cell of each other</i>
 Happens if the agents are walking towards each other (in opposite directions).
-<img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura3.PNG?raw=true"/>
- <br>
+
+ </p>
+<br>
+
+ 
+ 
+ 
+ 
+ 
+ 
  
 <h2>Reference information</h2>
+<p>
 <ul style="list-style-type:disc;">
   <li> <a href="https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php" >https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</a></li>
  
@@ -115,6 +133,6 @@ Happens if the agents are walking towards each other (in opposite directions).
  
  <li> <a href="https://sandruski.github.io/RTS-Group-Movement/">https://sandruski.github.io/RTS-Group-Movement/</a></li> 
 </ul>
-
+<p>
 
 
