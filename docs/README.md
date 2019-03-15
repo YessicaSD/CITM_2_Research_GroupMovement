@@ -1,7 +1,7 @@
 
 I am  <a href="https://www.linkedin.com/in/yessica-servin-dominguez-663175165/" >Yessica Servin Dominguez</a>, student of the <a href="https://www.citm.upc.edu/ing/estudis/graus-videojocs/">Bachelor’s Degree in Video Games by UPC at CITM</a>. 
 This content is generated for the second year’s subject Project 2, under supervision of lecturer <a href="https://es.linkedin.com/in/ricardpillosu">Ricard Pillosu</a>. 
-<p>Especial thanks to Sandra Alvarez that help me, and she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a><p>
+<p>Especial thanks to Sandra Alvarez, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a><p>
 
 <h1>Introduction</h1>
 <p>The objetive of this research is to implement group pathfinding. 
