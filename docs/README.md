@@ -10,6 +10,7 @@ This feature's something that you can do in many ways, it depends on your game c
 <i>Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
  AND please check out reference links I used to develop this project you could find more information</i>
  <iframe width="560" height="315" src="https://www.youtube.com/embed/eswjTK_6-A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ <br>
  <i> Espected Result</i>
  
  <h1>Pathfinding</h1>
@@ -74,7 +75,7 @@ In my case I made a Lider in case a unit don't have a path cause it's goal was i
    
 <h3>First kind of collition </h3>
 <p>
- <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura.PNG"/>
+ <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura.PNG?raw=true"/>
 <i>An unit try to enter in a tile where there is a unit not moving.</i>
 To solve this problem you should consider de direction of the unit that is moving.
 To move the one that lies still in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the opposite make. 
