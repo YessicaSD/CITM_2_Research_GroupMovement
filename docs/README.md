@@ -8,7 +8,8 @@ To reach this we'll analysis differents group movement implented in RTS games, w
 This feature's something that you can do in many ways, it depends on your game characteristics.</p>
 <i>Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
  AND please check out reference links I used to develop this project you could find more information</i>
- 
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/eswjTK_6-A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ <i> Espected Result</i>
  
  <h1>Pathfinding</h1>
  To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lowe computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
