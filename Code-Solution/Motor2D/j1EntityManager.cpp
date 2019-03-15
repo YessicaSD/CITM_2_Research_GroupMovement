@@ -301,7 +301,45 @@ void j1EntityManager::PredictPossibleCollitions()
 							otherU->SetToWaiting(u);
 						}
 					}
+					// TODO 5 --------------------------------------------------------------------------------------
+					if (u->next_Goal == otherU->TilePos && otherU->next_Goal == u->TilePos)
+					{
+						if (u->state == followPath && otherU->state == followPath)
+						{
+							if (u->GetUnitDirection() == UnitDirection_Right || u->GetUnitDirection() == UnitDirection_Left)
+							{
+								if (App->pathfinding->IsWalkable({ otherU->TilePos.x ,otherU->TilePos.y + 1 }))
+								{
+									otherU->Path.insert(otherU->Path.begin(), { otherU->TilePos.x ,otherU->TilePos.y });
+									otherU->Path.insert(otherU->Path.begin(), { otherU->TilePos.x,otherU->TilePos.y + 1 });
+									otherU->state = IncrementWaypoint;
+									
+								}
+								else if (App->pathfinding->IsWalkable({ otherU->TilePos.x ,otherU->TilePos.y - 1 }))
+								{
+									otherU->Path.insert(otherU->Path.begin(), { otherU->TilePos.x ,otherU->TilePos.y });
+									otherU->Path.insert(otherU->Path.begin(), { otherU->TilePos.x ,otherU->TilePos.y - 1 });
+									otherU->state = IncrementWaypoint;
+								}
+							}
+							else if (u->GetUnitDirection() == UnitDirection_Down || u->GetUnitDirection() == UnitDirection_Up)
+							{
+								if (App->pathfinding->IsWalkable({ otherU->TilePos.x + 1  ,otherU->TilePos.y }))
+								{
+									otherU->Path.insert(otherU->Path.begin(), { otherU->TilePos.x ,otherU->TilePos.y });
+									otherU->Path.insert(otherU->Path.begin() + 1, { otherU->TilePos.x,otherU->TilePos.y });
+									otherU->state = IncrementWaypoint;
 
+								}
+								else if (App->pathfinding->IsWalkable({ otherU->TilePos.x - 1 ,otherU->TilePos.y  }))
+								{
+									otherU->Path.insert(otherU->Path.begin(), { otherU->TilePos.x ,otherU->TilePos.y  });
+									otherU->Path.insert(otherU->Path.begin(), { otherU->TilePos.x - 1 ,otherU->TilePos.y  });
+									otherU->state = IncrementWaypoint;
+								}
+							}
+						}
+					}
 				}
 			}
 		}

@@ -133,7 +133,8 @@ bool j1EntityManager::Update(float dt)
 			}
 
 		}
-		//TODO 2- uncomment it when funtion is done
+		//TODO 1- uncomment it when funtion is done 
+		//Only for debug then delete it
 		//Calculate_middle_Point();
 	}
 	
@@ -150,64 +151,14 @@ bool j1EntityManager::Update(float dt)
 
 	//Here we click the destination-----------------------------------------------------------------------------
 	//TODO 2: Now for each entity find it's goal respecting original collocation
+	// Also should change state of the entities to getPaht state when a goal is asigned
 	
+	//TODO 6 
+	//Define a max offset ----------------------
+	//Units that are out should get a new goal
 	if (App->input->GetMouseButtonState(1) == j1KeyState::KEY_DOWN && App->pathfinding->IsWalkable(App->input->GetMousePos_Tiles()))
 	{
-		Calculate_middle_Point();
-		iPoint fl_mousePos_px = App->render->ScreenToWorld(mouse_pos.x, mouse_pos.y);
-		iPoint Destination_Tile = App->map->WorldToMap(fl_mousePos_px.x, fl_mousePos_px.y);
-		//Center it 
-		
-		iPoint origin;
-		Unit* Leader = nullptr;
-		bool createdLeader=false;
-		//Calculete max objeset Ratius
-		int max_offset_goal=(int)(selected_units.size()*0.5F);
-		//max_offset_goal += 5;
-		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
-		{
-			iPoint Tile_goal;
-			origin = App->map->WorldToMap((*iter)->position.x, (*iter)->position.y);
-			iPoint distance_middlePoint = (*iter)->position.ReturniPoint() - middlePoint_Group.ReturniPoint();
-			iPoint Pixels_goal = (distance_middlePoint + fl_mousePos_px).ReturniPoint();
-			Tile_goal = App->map->WorldToMap((int)Pixels_goal.x, (int)Pixels_goal.y);
-			if (Tile_goal.x >= Destination_Tile.x - max_offset_goal
-				&& Tile_goal.x <= Destination_Tile.x + max_offset_goal
-				&& Tile_goal.y >= Destination_Tile.y - max_offset_goal
-				&& Tile_goal.y <= Destination_Tile.y + max_offset_goal)
-			{
-				if (App->pathfinding->IsWalkable(Tile_goal))
-				{
-					Unit* selectedUnit = (Unit*)(*iter);
-					selectedUnit->goal = Tile_goal;
-					selectedUnit->state = getPath;
-					if (createdLeader == false)
-					{
-						Leader = selectedUnit;
-						createdLeader = true;
-					}
-				}
-			}
-		}
-		for (std::vector<j1Entity*>::iterator iter = selected_units.begin(); iter != selected_units.end(); ++iter)
-		{
-			Unit* selectedUnit = (Unit*)(*iter);
-			if (Leader != nullptr)
-			{
-				if (selectedUnit->state != getPath)
-				{
-					selectedUnit->goal = Leader->goal;
-					selectedUnit->state = getPath;
-				}
-			}
-			else
-			{
-				selectedUnit->goal = Destination_Tile;
-				selectedUnit->state = getPath; 
-				Leader = selectedUnit;
-			}
-			
-		}
+
 	}
 	
 	
@@ -259,50 +210,17 @@ void j1EntityManager::PredictPossibleCollitions()
 				if (*iter != *jiter)
 				{
 					//TODO 3--------------------------------------------------------------------------------------------------------------
-					//if the position where other entitie is, is the entities next tile objetive------------------------------------------
-					if (otherU->TilePos == u->next_Goal)
-					{
-						if (otherU->state == idle)
-						{
-							if (u->next_Goal == u->goal)
-							{
-								u->state = idle;
-							}
-							else
-							{
-								if (otherU->MoveOfTheWayOf(u) == true)
-								{
-									u->SetToWaiting(otherU);
-								}
-								else
-								{
-									u->state = idle;
-								}
-							}
-						}
-					}
+					//Implement the first collition prevention
+					//Situation the moving unit wants to get to a tile were othe unit 
+					//is not moving. 
+
+					
 					//TODO 4--------------------------------------------------------------------------------------------------------
-					if (otherU->next_Goal == u->next_Goal)
-					{
-						if (otherU->state == waiting || u->state == waiting)
-						{
+					// If two units are moving to the same tile one of them should wait.
 
-						}
-						else
-						{
-							if (otherU->next_Goal == otherU->goal)
-							{
-								otherU->SetToWaiting(u);
-							}
-							else if (u->next_Goal == u->goal)
-							{
-								u->SetToWaiting(otherU);
-							}
-							else
-							otherU->SetToWaiting(u);
-						}
-					}
-
+					//TODO 5 
+					//Frontal collition case
+					//One of them should move away and repath.
 				}
 			}
 		}

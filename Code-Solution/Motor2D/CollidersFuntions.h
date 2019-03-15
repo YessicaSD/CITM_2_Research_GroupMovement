@@ -8,9 +8,9 @@ struct Circle
 	bool IsPointIn(fPoint point)
 	{
 		if (point.x >= (center.x - radius)
-			&& point.x< (center.x + radius)
+			&& point.x<= (center.x + radius)
 			&& point.y >=(center.y - radius)
-			&& point.y < (center.y + radius))
+			&& point.y <= (center.y + radius))
 			return true;
 		else
 			return false;

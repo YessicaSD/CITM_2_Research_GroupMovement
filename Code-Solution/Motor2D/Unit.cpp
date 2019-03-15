@@ -10,7 +10,7 @@
 //#include "SDL\include\SDL_rect.h
 Unit::Unit(fPoint position, SDL_Texture * tex, entities_types type):j1Entity(position,tex,type)
 {
-	posCollider.radius = 3;
+	posCollider.radius = 4;
 	posCollider.center = position;
 }
 void Unit::Draw(float dt)
@@ -190,7 +190,7 @@ void Unit::UnitStateMachine(float dt)
 		{
 			state = idle;
 		}
-		iPoint aux = { (int)(speed.x/**dt * 10*/),(int)(speed.y/**dt * 10*/) };
+		iPoint aux = { (int)(speed.x*dt * 10),(int)(speed.y*dt * 10) };
 		position.x += (float)aux.x;
 		position.y += (float)aux.y;
 		posCollider.center = position;
@@ -292,25 +292,10 @@ void Unit::SetUnitDirectionByValue(fPoint unitDirection)
 {
 	direction = unitDirection;
 	if (direction.x > 0.0f) {
-
-		if (direction.y > 0.0f)
-			state_diretion = UnitDirection_DownRight;
-
-		else if (direction.y < 0.0f)
-			state_diretion = UnitDirection_UpRight;
-
-		else
 			state_diretion = UnitDirection_Right;
 	}
 	else if (direction.x < 0.0f) {
 
-		if (direction.y > 0.0f)
-			state_diretion = UnitDirection_DownLeft;
-
-		else if (direction.y < 0.0f)
-			state_diretion = UnitDirection_UpLeft;
-
-		else
 			state_diretion = UnitDirection_Left;
 	}
 	else {

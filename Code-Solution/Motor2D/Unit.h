@@ -51,10 +51,11 @@ private:
 
 	fPoint speed;
 	fPoint direction;
-	std::vector<iPoint> Path;
+	
 	
 
 public:
+	std::vector<iPoint> Path;
 	Circle posCollider;
 	Unit_State state = idle;
 	CollisionType ColliderState = CollisionType_NoCollision;
