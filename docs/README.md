@@ -1,6 +1,7 @@
 
 I am  <a href="https://www.linkedin.com/in/yessica-servin-dominguez-663175165/" >Yessica Servin Dominguez</a>, student of the <a href="https://www.citm.upc.edu/ing/estudis/graus-videojocs/">Bachelor’s Degree in Video Games by UPC at CITM</a>. 
-This content is generated for the second year’s subject Project 2, under supervision of lecturer <a href="https://es.linkedin.com/in/ricardpillosu">Ricard Pillosu</a>.
+This content is generated for the second year’s subject Project 2, under supervision of lecturer <a href="https://es.linkedin.com/in/ricardpillosu">Ricard Pillosu</a>. 
+<p>Especial thanks to Sandra Alvarez, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a><p>
 
 <h1>Introduction</h1>
 <p>The objetive of this research is to implement group pathfinding. 
@@ -8,7 +9,9 @@ To reach this we'll analysis differents group movement implented in RTS games, w
 This feature's something that you can do in many ways, it depends on your game characteristics.</p>
 <i>Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
  AND please check out reference links I used to develop this project you could find more information</i>
- 
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/eswjTK_6-A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ <br>
+ <i> Espected Result</i>
  
  <h1>Pathfinding</h1>
  To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lowe computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
@@ -57,12 +60,12 @@ This is something that games like Command & Conquer: Red Alert 2 and The Maestro
  <p>The problem with this is that as they started so far away from the group they end up separated, instead to join the group. To solve this problem we are going to limit the offset of the entities to the goal.
 In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
  <br>
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true" width="400"/> 
- <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true" width="400"/> 
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true" width="350"/> 
+ <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true" width="350"/> 
  <br>
  <i>before and after</i>
  <br>
-<p>
+</p>
  
  
    <h1>Collition system</h1>
@@ -72,30 +75,59 @@ In my case I made a Lider in case a unit don't have a path cause it's goal was i
    
 <h3>First kind of collition </h3>
 <p>
+ <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura.PNG?raw=true"/>
 <i>An unit try to enter in a tile where there is a unit not moving.</i>
 To solve this problem you should consider de direction of the unit that is moving.
 To move the one that lies still in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the opposite make. 
-<p>
-<img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="400" align="left">
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
+</p>
  <br>
+  <br>
+   <br>
+
+<img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="350">
+<img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="350" >
+
  
+ <p>
+ <br>
  <iframe width="560" height="315" src="https://www.youtube.com/embed/jA2epda-RkM?start=78" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen align="center"></iframe>
  <br>
  <i>This is done in the "Supreme Commander 2" in witch units move away from the path of other </i>
+ </p>
  
+ <br>
  <h3>Second kind of collition </h3>
+ <p>
+  <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura2.PNG?raw=true"/>
 <i>Two units want to get into the same tile, in this one there is no unit.</i>
+ </p>
 <br>
+
 <p>To solve this possible collition one unit should wait the other one to move, to this tile and get out.
 Also consider if this tile is the goal of one of them, in which case the first unit will pass would be the one that it's not.
 You probably won't notice this implementation depending on the units speed.<p>
- 
- <h3> Third kind of collition</h3>
-2. Two agents reach the cell of each other (TowardsCell): occurs if the agents are walking towards each other (in opposite directions).
 
- 
+<br>
+ <br>
+ <br>
+<h3> Third kind of collition</h3>
+<p>
+ <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura3.PNG?raw=true"/>
+<i>Two agents reach the cell of each other</i>
+Happens if the agents are walking towards each other (in opposite directions).
+
+ </p>
+<br>
+<br>
+<br> 
+ <br>
+<br> 
+<br> 
+ <br>
+<br> 
+<br> 
 <h2>Reference information</h2>
+<p>
 <ul style="list-style-type:disc;">
   <li> <a href="https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php" >https://www.gamasutra.com/blogs/AndrewErridge/20180522/318413/Group_Pathfinding__Movement_in_RTS_Style_Games.php</a></li>
  
@@ -103,6 +135,8 @@ You probably won't notice this implementation depending on the units speed.<p>
  
  <li> <a href="https://www.gamasutra.com/view/feature/3313/coordinated_unit_movement.php?print=1">https://www.gamasutra.com/view/feature/3313/coordinated_unit_movement.php?print=1</a></li> 
  
+ <li> <a href="https://sandruski.github.io/RTS-Group-Movement/">https://sandruski.github.io/RTS-Group-Movement/</a></li> 
 </ul>
+<p>
 
 
