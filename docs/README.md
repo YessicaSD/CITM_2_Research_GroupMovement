@@ -77,7 +77,8 @@ In my case I made a Lider in case a unit don't have a path cause it's goal was i
 <i>An unit try to enter in a tile where there is a unit not moving.</i>
 To solve this problem you should consider de direction of the unit that is moving.
 To move the one that lies still in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the opposite make. 
-<img align="left" https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura.PNG"/>
+<img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura.PNG"/>
+ <br>
 <p>
 <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="400" align="left">
   <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
@@ -87,6 +88,7 @@ To move the one that lies still in a tile that doesn't bother the unit that is m
  <br>
  <i>This is done in the "Supreme Commander 2" in witch units move away from the path of other </i>
  
+ <br>
  <h3>Second kind of collition </h3>
 <i>Two units want to get into the same tile, in this one there is no unit.</i>
 <br>
@@ -94,11 +96,14 @@ To move the one that lies still in a tile that doesn't bother the unit that is m
 Also consider if this tile is the goal of one of them, in which case the first unit will pass would be the one that it's not.
 You probably won't notice this implementation depending on the units speed.<p>
  <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura2.PNG?raw=true"/>
-
+<br>
+ 
+ 
 <h3> Third kind of collition</h3>
 <i>Two agents reach the cell of each other</i>
 Happens if the agents are walking towards each other (in opposite directions).
 <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura3.PNG?raw=true"/>
+ <br>
  
 <h2>Reference information</h2>
 <ul style="list-style-type:disc;">
