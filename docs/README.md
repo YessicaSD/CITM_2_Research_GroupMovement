@@ -59,12 +59,12 @@ This is something that games like Command & Conquer: Red Alert 2 and The Maestro
  <p>The problem with this is that as they started so far away from the group they end up separated, instead to join the group. To solve this problem we are going to limit the offset of the entities to the goal.
 In my case I made a Lider in case a unit don't have a path cause it's goal was invalid or was out of this ratio of offset units can follow.
  <br>
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true" width="400"/> 
- <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true" width="400"/> 
+  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/NoFollowingLeader.gif?raw=true" width="350"/> 
+ <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/FollowLider.gif?raw=true" width="350"/> 
  <br>
  <i>before and after</i>
  <br>
-<p>
+</p>
  
  
    <h1>Collition system</h1>
@@ -80,10 +80,13 @@ To solve this problem you should consider de direction of the unit that is movin
 To move the one that lies still in a tile that doesn't bother the unit that is moving. Or if you want to make the effect that one is pushing the other, you should do the opposite make. 
 </p>
  <br>
- <p>
-<img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="400" align="left">
-  <img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="400" >
- </p>
+  <br>
+   <br>
+
+<img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/MovingUnits.gif?raw=true" width="350">
+<img src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/pushingUnits.gif?raw=true" width="350" >
+
+ 
  <p>
  <br>
  <iframe width="560" height="315" src="https://www.youtube.com/embed/jA2epda-RkM?start=78" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen align="center"></iframe>
@@ -104,8 +107,8 @@ Also consider if this tile is the goal of one of them, in which case the first u
 You probably won't notice this implementation depending on the units speed.<p>
 
 <br>
- 
- 
+ <br>
+ <br>
 <h3> Third kind of collition</h3>
 <p>
  <img align="left" src="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/blob/master/docs/Media/Captura3.PNG?raw=true"/>
@@ -114,14 +117,14 @@ Happens if the agents are walking towards each other (in opposite directions).
 
  </p>
 <br>
-
- 
- 
- 
- 
- 
- 
- 
+<br>
+<br> 
+ <br>
+<br> 
+<br> 
+ <br>
+<br> 
+<br> 
 <h2>Reference information</h2>
 <p>
 <ul style="list-style-type:disc;">
