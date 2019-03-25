@@ -4,12 +4,18 @@ This content is generated for the second year’s subject Project 2, under super
 <p>Especial thanks to <a href="https://github.com/Sandruski">Sandra Alvarez<a/>, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a><p>
 
 <h1>Introduction</h1>
-<p>The objetive of this research is to implement group pathfinding. 
+<p>
+ The objetive of this research is to implement group pathfinding. 
 To reach this we'll analysis differents group movement implented in RTS games, we'll see different forms to implemantate it.
-This feature's something that you can do in many ways, it depends on your game characteristics.</p>
-<i>Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
- AND please check out reference links I used to develop this project you could find more information</i>
- <iframe width="560" height="315" src="https://www.youtube.com/embed/eswjTK_6-A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+This feature's something that you can do in many ways, it depends on your game characteristics.
+ <i>
+ Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
+ AND please check out reference links I used to develop this project you could find more information
+ </i>
+</p>
+
+ <iframe align= "center" width="560" height="315" src="https://www.youtube.com/embed/eswjTK_6-A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
  <br>
  <i> Espected Result</i>
  
