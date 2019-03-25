@@ -1,8 +1,8 @@
-
+<p>
 I am  <a href="https://www.linkedin.com/in/yessica-servin-dominguez-663175165/" >Yessica Servin Dominguez</a>, student of the <a href="https://www.citm.upc.edu/ing/estudis/graus-videojocs/">Bachelor’s Degree in Video Games by UPC at CITM</a>. 
 This content is generated for the second year’s subject Project 2, under supervision of lecturer <a href="https://es.linkedin.com/in/ricardpillosu">Ricard Pillosu</a>. 
-<p>Especial thanks to <a href="https://github.com/Sandruski">Sandra Alvarez<a/>, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a><p>
-
+Especial thanks to <a href="https://github.com/Sandruski">Sandra Alvarez<a/>, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a>
+ </p>
 <h1>Introduction</h1>
 <p>
  The objetive of this research is to implement group pathfinding. 
@@ -17,7 +17,7 @@ This feature's something that you can do in many ways, it depends on your game c
  <iframe align= "center" width="560" height="315" src="https://www.youtube.com/embed/eswjTK_6-A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
  <br>
- <i> Espected Result</i>
+ <i align = "center"> Espected Result</i>
  
  <h1>Pathfinding</h1>
  To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lowe computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
