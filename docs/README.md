@@ -8,6 +8,8 @@ Especial thanks to <a href="https://github.com/Sandruski">Sandra Alvarez<a/>, sh
  The objetive of this research is to implement group pathfinding. 
 To reach this we'll analysis differents group movement implented in RTS games, we'll see different forms to implemantate it.
 This feature's something that you can do in many ways, it depends on your game characteristics.
+ <br>
+ <br>
  <i>
  Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
  AND please check out reference links I used to develop this project you could find more information
