@@ -1,16 +1,15 @@
+<a href="https://docs.google.com/presentation/d/1nEuLsQ954XjIWVk_LUDnNSiGv2XDGdqYAolMc9Ufhvs/edit?usp=sharing">Presentation</a>
+<a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement">Repository</a>
+<a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/1">Exercises</a>
+<a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/2">Solutions</a>
+
+<h1>Introduction</h1>
 <p>
 I am  <a href="https://www.linkedin.com/in/yessica-servin-dominguez-663175165/" >Yessica Servin Dominguez</a>, student of the <a href="https://www.citm.upc.edu/ing/estudis/graus-videojocs/">Bachelor’s Degree in Video Games by UPC at CITM</a>. 
 This content is generated for the second year’s subject Project 2, under supervision of lecturer <a href="https://es.linkedin.com/in/ricardpillosu">Ricard Pillosu</a>. 
 Especial thanks to <a href="https://github.com/Sandruski">Sandra Alvarez</a>, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a>
  </p>
-<h1>Introduction</h1>
-<p>
-<p>
-I am  <a href="https://www.linkedin.com/in/yessica-servin-dominguez-663175165/" >Yessica Servin Dominguez</a>, student of the <a href="https://www.citm.upc.edu/ing/estudis/graus-videojocs/">Bachelor’s Degree in Video Games by UPC at CITM</a>. 
-This content is generated for the second year’s subject Project 2, under supervision of lecturer <a href="https://es.linkedin.com/in/ricardpillosu">Ricard Pillosu</a>. 
-Especial thanks to <a href="https://github.com/Sandruski">Sandra Alvarez</a>, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a>
- </p>
-<h1>Introduction</h1>
+<h1>Objective</h1>
 <p>
  The objetive of this research is to implement group pathfinding. 
 To reach this we'll analysis differents group movement implented in RTS games, we'll see different forms to implemantate it.
@@ -21,6 +20,7 @@ This feature's something that you can do in many ways, it depends on your game c
  Disclaimer: Although this implementation is based on different RTS games it could also be applied in different kind of games. 
  AND please check out reference links I used to develop this project you could find more information
  </i>
+
 
 
  <center>
