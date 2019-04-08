@@ -1,8 +1,10 @@
-<a href="https://docs.google.com/presentation/d/1nEuLsQ954XjIWVk_LUDnNSiGv2XDGdqYAolMc9Ufhvs/edit?usp=sharing">Presentation</a>
-<a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement">Repository</a>
-<a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/1">Exercises</a>
-<a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/2">Solutions</a>
-
+<h1>Group Movement</h1>
+<ul style="list-style-type:disc;">
+<li><a href="https://docs.google.com/presentation/d/1nEuLsQ954XjIWVk_LUDnNSiGv2XDGdqYAolMc9Ufhvs/edit?usp=sharing">Presentation</a></li>
+<li><a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement">Repository</a></li>
+<li><a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/1">Exercises</a></li>
+<li><a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/2">Solutions</a></li>
+</ul>
 <h1>Introduction</h1>
 <p>
 I am  <a href="https://www.linkedin.com/in/yessica-servin-dominguez-663175165/" >Yessica Servin Dominguez</a>, student of the <a href="https://www.citm.upc.edu/ing/estudis/graus-videojocs/">Bachelor’s Degree in Video Games by UPC at CITM</a>. 
