@@ -1,9 +1,10 @@
-<h1>Group Movement</h1>
+
+<h1>Resources</h1>
 <ul style="list-style-type:disc;">
 <li><a href="https://docs.google.com/presentation/d/1nEuLsQ954XjIWVk_LUDnNSiGv2XDGdqYAolMc9Ufhvs/edit?usp=sharing">Presentation</a></li>
 <li><a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement">Repository</a></li>
 <li><a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/1">Exercises</a></li>
-<li><a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/2">Solutions</a></li>
+<li><a href="https://github.com/YessicaSD/CITM_2_Research_GroupMovement/releases/tag/2">Solution</a></li>
 </ul>
 <h1>Introduction</h1>
 <p>
@@ -36,7 +37,7 @@ This feature's something that you can do in many ways, it depends on your game c
  
  <h1>Pathfinding</h1>
  <p>
- To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lower computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
+ To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="[https://harablog.wordpress.com/2011/09/07/jump-point-search/](https://harablog.wordpress.com/2011/09/07/jump-point-search/)"> Jump Point Search</a> or  <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lower computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
  <br>
  If you are a beginner and your game doesn't need that many units, you can also see Breadth First Search algorithm or Dijkstra’s Algorithm. These methods are more easy to understand and also to implement and a good point to start. 
  </p>
