@@ -12,6 +12,7 @@ I am  <a href="https://www.linkedin.com/in/yessica-servin-dominguez-663175165/" 
 This content is generated for the second year’s subject Project 2, under supervision of lecturer <a href="https://es.linkedin.com/in/ricardpillosu">Ricard Pillosu</a>. 
 Especial thanks to <a href="https://github.com/Sandruski">Sandra Alvarez</a>, she also did the same research so check out her project <a href="https://sandruski.github.io/RTS-Group-Movement/" >here</a>
  </p>
+ 
 <h1>Objective</h1>
 <p>
  The objetive of this research is to implement group pathfinding. 
@@ -37,7 +38,7 @@ This feature's something that you can do in many ways, it depends on your game c
  
  <h1>Pathfinding</h1>
  <p>
- To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="[https://harablog.wordpress.com/2011/09/07/jump-point-search/](https://harablog.wordpress.com/2011/09/07/jump-point-search/)"> Jump Point Search</a> or  <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lower computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
+ To implement a group movement the first step is to be able to move one unit, this one needs to find the best way to point A to B, the best way to do this is by using the <a href="https://harablog.wordpress.com/2011/09/07/jump-point-search/"> Jump Point Search</a> or  <a href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">A* algorithm</a> , it's generally used in most of the games cause it takes lower computation power, and if you need a lot of units to be searching for the goal that is an important thing to consider. 
  <br>
  If you are a beginner and your game doesn't need that many units, you can also see Breadth First Search algorithm or Dijkstra’s Algorithm. These methods are more easy to understand and also to implement and a good point to start. 
  </p>
